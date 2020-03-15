@@ -60,12 +60,17 @@ public class Flower {
 
     @Override
     public String toString() {
-        return "Flower{" +
-                "name='" + name + '\'' +
-                ", water=" + water +
-                ", sunlight=" + sunlight +
-                ", love=" + love +
-                ", food=" + food +
-                '}';
+        return "Teie lille nimi on " + name +
+                ", tema seisund on järgmine:\nvesi = " + water +
+                ", \nvalgus = " + sunlight +
+                ", \narmastus = " + love +
+                ", \ntoiduained = " + food + "\n";
+    }
+
+    public void addFood(double food){
+        this.setFood(this.getFood() + food);
+    }
+    public void loseFood(){
+        this.setFood(this.getFood() - 5);
     }
 }
