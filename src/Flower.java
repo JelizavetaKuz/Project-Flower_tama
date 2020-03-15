@@ -9,6 +9,10 @@ public class Flower {
     private double sunlight;
     private double love;
     private double food;
+    private int place;
+    private int stage;
+    private double time;
+    private int hp;
 
     Flower(String name){
         this.name = name;
@@ -16,6 +20,9 @@ public class Flower {
         this.water = 0.0;
         this.love = 0.0;
         this.sunlight = 0.0;
+        this.place = 0;
+        this.time = 0.0;
+        this.hp = 100;
     }
 
     public void setFood(double food) {
@@ -38,6 +45,18 @@ public class Flower {
         this.water = water;
     }
 
+    public void setPlace(int place) {
+        this.place = place;
+    }
+
+    public void setTime(double time) {
+        this.time = time;
+    }
+
+    public int getStage() {
+        return stage;
+    }
+
     public double getFood() {
         return food;
     }
@@ -58,19 +77,105 @@ public class Flower {
         return name;
     }
 
-    @Override
-    public String toString() {
-        return "Teie lille nimi on " + name +
-                ", tema seisund on järgmine:\nvesi = " + water +
-                ", \nvalgus = " + sunlight +
-                ", \narmastus = " + love +
-                ", \ntoiduained = " + food + "\n";
+    public int getPlace() {
+        return place;
     }
 
-    public void addFood(double food){
-        this.setFood(this.getFood() + food);
+    public void setStage(int stage) {
+        this.stage = stage;
     }
-    public void loseFood(){
-        this.setFood(this.getFood() - 5);
+
+    public double getTime() {
+        return time;
     }
+
+    @Override
+    public String toString() {
+        String kasvuTase = "";
+        String positsioon = "";
+        switch (stage){
+            case 0:
+                kasvuTase = "seemnetera";
+                break;
+            case 1:
+                kasvuTase = "idu";
+                break;
+            case 2:
+                kasvuTase = "väike lill";
+                break;
+            case 3:
+                kasvuTase = "täiskasvanud lill";
+                break;
+        }
+
+        switch (place){
+            case 0:
+                positsioon = "varjus";
+                break;
+            case 1:
+                positsioon = "pool varjus";
+                break;
+            case 2:
+                positsioon = "valguse all";
+                break;
+        }
+
+        return "Teie lille nimi on " + name +
+                "\nTema tase on " + kasvuTase +
+                "\npraegu ta seisab " + positsioon +
+                "\ntema seisund on järgmine:\nvesi = " + water +
+                ", \nvalgus = " + sunlight +
+                ", \narmastus = " + love +
+                ", \ntoiduained = " + food +
+                ", \ntervise punktid = " + hp +
+                ", \nelu aeg tundides on " + time + "\n";
+    }
+
+    public void addSomething(String parameter, double value){
+        switch (parameter){
+            case "toiduained":
+                this.setFood(this.getFood() + value);
+                break;
+            case "armastus":
+                this.setLove(this.getLove() + value);
+                break;
+            case "vesi":
+                this.setWater(this.getWater() + value);
+         }
+    }
+    public void lose(){
+        double points = 5;
+        double waterMultiplier;
+        double lightMultiplier;
+
+        if(this.place == 0) {
+            waterMultiplier = 0.5;
+            lightMultiplier = 0.5;
+        }
+        else if(this.place == 1) {
+            waterMultiplier = 1.0;
+            lightMultiplier = 0.0;
+        }
+        else {
+            waterMultiplier = 1.5;
+            lightMultiplier = -1;
+        }
+
+        this.setFood(this.getFood() - points*0.02);
+        this.setLove(this.getLove() - points*0.2);
+        this.setWater(this.getWater() - points * waterMultiplier);
+        this.setSunlight(this.getSunlight() - points * lightMultiplier);
+
+
+    }
+
+    public void switchPlace(String command){
+        if(command == "Valguse alla")
+            this.setPlace(2);
+        else if(command == "Pimedusse")
+            this.setPlace(0);
+        else
+            this.setPlace(1);
+    }
+
 }
