@@ -1,6 +1,6 @@
 // TODO read/write file txt
 // TODO flower class: water, sunlight, love/talk, food
-// TODO time functions
+// TODO time functions, may use compareTo(Timestamp ts) or (Date o) ** Date is object
 // TODO relations between functions of watering, putting into the sunlight, talk/love/cuddling, giving the flower nutrition
 
 public class Flower {
@@ -179,3 +179,21 @@ public class Flower {
     }
 
 }
+
+/*
+import java.io.File;  // Import the File class
+
+public class GetFileInfo {
+    public static void main(String[] args) {
+        File myObj = new File("filename.txt");
+        if (myObj.exists()) {
+            System.out.println("File name: " + myObj.getName());
+            System.out.println("Absolute path: " + myObj.getAbsolutePath());
+            System.out.println("Writeable: " + myObj.canWrite());
+            System.out.println("Readable " + myObj.canRead());
+            System.out.println("File size in bytes " + myObj.length());
+        } else {
+            System.out.println("The file does not exist.");
+        }
+    }
+}*/
