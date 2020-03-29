@@ -2,17 +2,37 @@
 // TODO flower class: water, sunlight, love/talk, food
 // TODO time functions, may use compareTo(Timestamp ts) or (Date o) ** Date is object
 // TODO relations between functions of watering, putting into the sunlight, talk/love/cuddling, giving the flower nutrition
+// TODO do we make difference between seasons?
+// TODO should we do grow speed? this is just param for regulation of resource consumption
+// TODO sholud we add height
+// flower by itself is consuming sources to grow
 
-public class Flower {
+// Structure Human being inserts parameters to add in container, flower takes resources from there and grow.
+// In text file we save each timestamp when flower game has closed or stopped. On turning on we calculate all counters.
+
+
+public class Flower extends HumanBeing{
     private String name;
-    private double water;
-    private double sunlight;
-    private double love;
-    private double food;
-    private int place;
-    private int stage;
-    private double time;
-    private int hp;
+
+    private  double height; // cm, form text
+
+    // counters for flower
+    private double water; // h2o
+    private double sunlight; // we do not affect this
+    private double love; // co2
+    private double food; // nutrition
+
+    // make max level of counters, take from text file
+
+
+    // do have critical, normal and perfect  level
+    private int hp; // regulate the amount of resource consumption
+
+    private int daytime;  // affected by time, can transport
+
+    private double time; // timestamp regulate cycling of consumption
+
+    private int stage; // regulate needed amount of resources for hp by * ... all counters
 
     Flower(String name){
         this.name = name;
@@ -20,7 +40,7 @@ public class Flower {
         this.water = 0.0;
         this.love = 0.0;
         this.sunlight = 0.0;
-        this.place = 0;
+        this.daytime = 0;
         this.time = 0.0;
         this.hp = 100;
     }
@@ -45,8 +65,8 @@ public class Flower {
         this.water = water;
     }
 
-    public void setPlace(int place) {
-        this.place = place;
+    public void setDaytime(int daytime) {
+        this.daytime = daytime;
     }
 
     public void setTime(double time) {
@@ -77,8 +97,8 @@ public class Flower {
         return name;
     }
 
-    public int getPlace() {
-        return place;
+    public int getDaytime() {
+        return daytime;
     }
 
     public void setStage(int stage) {
@@ -108,7 +128,7 @@ public class Flower {
                 break;
         }
 
-        switch (place){
+        switch (daytime){
             case 0:
                 positsioon = "varjus";
                 break;
@@ -131,6 +151,7 @@ public class Flower {
                 ", \nelu aeg tundides on " + time + "\n";
     }
 
+
     public void addSomething(String parameter, double value){
         switch (parameter){
             case "toiduained":
@@ -148,11 +169,11 @@ public class Flower {
         double waterMultiplier;
         double lightMultiplier;
 
-        if(this.place == 0) {
+        if(this.daytime == 0) {
             waterMultiplier = 0.5;
             lightMultiplier = 0.5;
         }
-        else if(this.place == 1) {
+        else if(this.daytime == 1) {
             waterMultiplier = 1.0;
             lightMultiplier = 0.0;
         }
@@ -169,13 +190,15 @@ public class Flower {
 
     }
 
+    // TODO - here we have todo the day change instead the same period night 0, midday 2, morning and evening 1
+    // have relation with grow speed
     public void switchPlace(String command){
         if(command == "Valguse alla")
-            this.setPlace(2);
+            this.setDaytime(2);
         else if(command == "Pimedusse")
-            this.setPlace(0);
+            this.setDaytime(0);
         else
-            this.setPlace(1);
+            this.setDaytime(1);
     }
 
 }
