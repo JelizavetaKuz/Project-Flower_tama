@@ -2,6 +2,11 @@ import java.util.Scanner;
 
 public class HumanBeing {
     // same as add
+
+    /**
+     * Method for adding resources in container
+     * @param contain Container
+     */
     public void addSomething(Container contain){
         double food = 5;
         double love = 5;

@@ -71,4 +71,14 @@ public class Container {
         this.position = position;
     }
 
+    @Override
+    public String toString() {
+        return "Container{" +
+                "water=" + water +
+                ", sunlight=" + sunlight +
+                ", love=" + love +
+                ", food=" + food +
+                ", position=" + position +
+                '}';
+    }
 }
