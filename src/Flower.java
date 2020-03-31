@@ -17,6 +17,10 @@ public class Flower{
     // do have critical, normal and perfect  level
     private int hp; // regulate the amount of resource consumption
     // make max level of counters, take from text file hp
+    protected double maxwater; // h2o
+    protected double maxsunlight; // we do not affect this
+    protected double maxlove; // co2
+    protected double maxfood; // nutrition
 
     private double growSpeed;
     private int height;
@@ -47,7 +51,30 @@ public class Flower{
 
 
     //
-    public void conusme(Container container){
+    public void consume(Container container){
+        switch (container.getPosition()){
+            case 0:
+                growSpeed = 2.5; //
+                container.setSunlight(container.getSunlight() - maxsunlight);
+                container.setLove(container.getLove() - maxlove);
+                container.setWater(container.getWater() - maxwater*4);
+                container.setFood(container.getFood() - maxfood*0.3);
+                break;
+            case 1:
+                growSpeed = 1.0; //
+                container.setSunlight(container.getSunlight() - maxsunlight*2);
+                container.setLove(container.getLove() - maxlove*2);
+                container.setWater(container.getWater() - maxwater*2);
+                container.setFood(container.getFood() - maxfood*0.2);
+                break;
+            case 2:
+                growSpeed = 0.5; //
+                container.setSunlight(container.getSunlight() - maxsunlight*3);
+                container.setLove(container.getLove() - maxlove*4);
+                container.setWater(container.getWater() - maxwater*1);
+                container.setFood(container.getFood() - maxfood*0.1);
+                break;
+        }
 
     }
     // lose naturally
