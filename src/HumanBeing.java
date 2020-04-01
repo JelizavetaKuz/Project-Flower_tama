@@ -16,16 +16,16 @@ public class HumanBeing {
         boolean send = false;
         while(!send) {
             Scanner scan = new Scanner(System.in);
-            System.out.print("Mida lisada?: ");
+            System.out.print("What to add?: ");
             String parameter = scan.next();
             switch (parameter) {
-                case "toiduained":
+                case "nutrition":
                     contain.setFood(contain.getFood() + food);
                     break;
-                case "armastus":
+                case "love":
                     contain.setLove(contain.getLove() + love);
                     break;
-                case "vesi":
+                case "water":
                     contain.setWater(contain.getWater() + water);
                     break;
                 case "":
