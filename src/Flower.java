@@ -31,10 +31,10 @@ public class Flower{
     private double height;
     private double maxheight;//from txt
 
-    private int time; // type ?  timestamp regulate cycling of consumption
+    private double time; // type ?  timestamp regulate cycling of consumption
 
     private int stage; // regulate needed amount of resources for hp by * ... all counters
-    private  int periodTime; // max time of each stage, if not -> dead; from txt
+    private  double periodTime; // max time of each stage, if not -> dead; from txt
 
 
     /**
@@ -43,7 +43,7 @@ public class Flower{
      */
     Flower(String name){
         this.name = name;
-        this.time = 0;
+        this.time = 0.0;
         this.hp = 100;
         this.currenthp = 50;
 
@@ -294,7 +294,7 @@ public class Flower{
         return time;
     }
 
-    public void setTime(int time) {
+    public void setTime(double time) {
         this.time = time;
     }
 
@@ -310,7 +310,7 @@ public class Flower{
         return periodTime;
     }
 
-    public void setPeriodTime(int periodTime) {
+    public void setPeriodTime(double periodTime) {
         this.periodTime = periodTime;
     }
 

@@ -9,29 +9,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
-public class TestFlower {
-    public static void main(String[] args) throws IOException {
-        /*
-        Flower flower1 = new Flower("Lilia");
-        System.out.println(flower1);
-        flower1.switchPlace("Valguse alla");
-        flower1.addSomething("vesi",40);
-        flower1.addSomething("armastus",40);
-        flower1.addSomething("toiduained",40);
-        System.out.println(flower1);
-        flower1.lose();
-        System.out.println(flower1);
-        */
+public class FileConnection {
 
-        System.out.println(readTimePassed("test.txt"));
-
-    }
 
     public static void create(String fileName) throws IOException {
 
         File file = new File(fileName);
-        Scanner sc = new Scanner(file);
-        if(sc.nextLine()=="0"){
+        if(!file.exists()){
+            file.createNewFile();
+            Scanner sc = new Scanner(file);
             Scanner scan = new Scanner(System.in);
             System.out.print("Mis nimi tahad oma lillele anda? ");
             String name = scan.next();
@@ -102,9 +88,9 @@ public class TestFlower {
         flower.setGrowSpeed(Double.parseDouble(parameters.get(14)));
         flower.setHeight(Double.parseDouble(parameters.get(15)));
         flower.setMaxheight(Double.parseDouble(parameters.get(16)));
-        flower.setTime(Integer.parseInt(parameters.get(17)));
+        flower.setTime(Double.parseDouble(parameters.get(17)));
         flower.setStage(Integer.parseInt(parameters.get(18)));
-        flower.setPeriodTime((Integer.parseInt(parameters.get(19))));
+        flower.setPeriodTime((Double.parseDouble(parameters.get(19))));
 
 
 
@@ -132,7 +118,7 @@ public class TestFlower {
         return timePassed;
     }
 
-    public static double readHours(String fileName) throws FileNotFoundException {
+    public static int readHours(String fileName) throws FileNotFoundException {
         File file = new File(fileName);
         Scanner sc = new Scanner(file);
         ArrayList<String> parameters = new ArrayList<>();
