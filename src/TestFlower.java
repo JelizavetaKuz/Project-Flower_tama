@@ -68,17 +68,17 @@ public class TestFlower {
         String [] savedDivided = saved.split(":");
         String [] currentDivided = current.split(":");
 
-        int savedYear = Integer.valueOf(savedDivided[3]);
-        int currentYear = Integer.valueOf(currentDivided[3]);
+        int savedYear = Integer.parseInt(savedDivided[3]);
+        int currentYear = Integer.parseInt(currentDivided[3]);
 
-        int savedMonth = Integer.valueOf(savedDivided[2]);
-        int currentMonth = Integer.valueOf(currentDivided[2]);
+        int savedMonth = Integer.parseInt(savedDivided[2]);
+        int currentMonth = Integer.parseInt(currentDivided[2]);
 
-        int savedDay = Integer.valueOf(savedDivided[1]);
-        int currentDay = Integer.valueOf(currentDivided[1]);
+        int savedDay = Integer.parseInt(savedDivided[1]);
+        int currentDay = Integer.parseInt(currentDivided[1]);
 
-        int savedHour = Integer.valueOf(savedDivided[0]);
-        int currentHour = Integer.valueOf(currentDivided[0]);
+        int savedHour = Integer.parseInt(savedDivided[0]);
+        int currentHour = Integer.parseInt(currentDivided[0]);
 
         // Programmeerimisharjutused (LTAT.03.007) 2019/2020 1.loengu programm 
         int[] months = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
