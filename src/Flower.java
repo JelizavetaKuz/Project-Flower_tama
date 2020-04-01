@@ -45,6 +45,7 @@ public class Flower{
         this.name = name;
         this.time = 0.0;
         this.hp = 100;
+        this.currenthp = 50;
 
         this.waterunit = 10; // h2o; from txt
         this.sunlightunit = 10; // we do not affect this; from txt
@@ -107,6 +108,14 @@ public class Flower{
             loveunit *= modifier;
             sunlightunit *= modifier;
         }
+        if(time > periodTime){
+            currenthp = 0;
+            hp = 0;
+        }
+        if(currenthp == 0) {
+            hp = 0;
+            System.out.println("Game Over");
+        }
     }
 
     /**
@@ -159,21 +168,21 @@ public class Flower{
     protected void consume(){
         switch (container.getPosition()){
             case 0:
-                growSpeed = 1.5; //
+                growSpeed = 0.015; //
                 container.setSunlight(container.getSunlight() - sunlightunit);
                 container.setLove(container.getLove() - loveunit);
                 container.setWater(container.getWater() - waterunit *4);
                 container.setFood(container.getFood() - foodunit *0.3);
                 break;
             case 1:
-                growSpeed = 1.0; //
+                growSpeed = 0.001; //
                 container.setSunlight(container.getSunlight() - sunlightunit *2);
                 container.setLove(container.getLove() - loveunit *2);
                 container.setWater(container.getWater() - waterunit *2);
                 container.setFood(container.getFood() - foodunit *0.2);
                 break;
             case 2:
-                growSpeed = 0.5; //
+                growSpeed = 0.0005; //
                 container.setSunlight(container.getSunlight() - sunlightunit *4);
                 container.setLove(container.getLove() - loveunit *3);
                 container.setWater(container.getWater() - waterunit *1);
