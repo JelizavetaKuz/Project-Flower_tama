@@ -35,7 +35,7 @@ public class HumanBeing {
         }
     }
 
-    public void check(Flower flower){
+    public void checkstats(Flower flower){
         System.out.println(flower.getName() + "'s stats:");
         System.out.println("Health: " + flower.getCurrenthp());
         System.out.println("Stage of development (1- seed, 2-sprout, 3-youngster, 4-full age plant )"+flower.getStage());
