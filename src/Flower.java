@@ -48,14 +48,15 @@ public class Flower{
         this.currenthp = 50;
         this.height = 0.1;
 
-        this.waterunit = 10; // h2o; from txt
-        this.sunlightunit = 10; // we do not affect this; from txt
-        this.loveunit = 10; // co2; from txt
-        this.foodunit = 3; // nutrition; from txt
+        this.waterunit = 5; // h2o; from txt
+        this.sunlightunit = 5; // we do not affect this; from txt
+        this.loveunit = 5; // co2; from txt
+        this.foodunit = 2; // nutrition; from txt
 
         this.maxheight = 200;
         this.stage = 1;
         this.container = new Container();
+        this.periodTime = 24.0;
     }
 
     /**
@@ -75,7 +76,7 @@ public class Flower{
      * @param stage int
      * @param periodTime ?
      */
-    public Flower(String name, Container container, int hp, int currenthp, double waterunit, double sunlightunit, double loveunit, double foodunit, double growSpeed, double height, double maxheight, int time, int stage, int periodTime) {
+    public Flower(String name, Container container, int hp, int currenthp, double waterunit, double sunlightunit, double loveunit, double foodunit, double growSpeed, double height, double maxheight, double time, int stage, double periodTime) {
         this.name = name;
         this.container = container;
         this.hp = hp;
@@ -95,7 +96,8 @@ public class Flower{
     /**
      * Method for activation of flower methods
      */
-    public void grow(){
+    public void grow(int daytime){
+        this.container.updateposition(daytime);
         consume();
         sethp();
         setSpeed();

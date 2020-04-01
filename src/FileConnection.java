@@ -17,9 +17,10 @@ public class FileConnection {
         File file = new File(fileName);
         if(!file.exists()){
             file.createNewFile();
-            Scanner sc = new Scanner(file);
             Scanner scan = new Scanner(System.in);
-            System.out.print("Mis nimi tahad oma lillele anda? ");
+            System.out.println("You even can give him a name!");
+            System.out.println("So lets start!");
+            System.out.println("How would you like to name your flower?: ");
             String name = scan.next();
             Flower flower = new Flower(name);
 
@@ -32,7 +33,7 @@ public class FileConnection {
         File save = new File(saveFileName);
         Date currentDateUnformat = new Date();
         //System.out.println(currentDateUnformat);
-        SimpleDateFormat format = new SimpleDateFormat("hh:dd:MM:yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("kk:dd:MM:yyyy");
         String currentDate = format.format(currentDateUnformat);
         //System.out.println(currentDate);
 
@@ -102,7 +103,7 @@ public class FileConnection {
         File file = new File(fileName);
         Scanner sc = new Scanner(file);
         Date currentDateUnformate = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("hh:dd:MM:yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("kk:dd:MM:yyyy");
         String currentDate = format.format(currentDateUnformate);
 
         while (sc.hasNextLine()){
