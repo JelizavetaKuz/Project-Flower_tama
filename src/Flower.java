@@ -44,8 +44,9 @@ public class Flower{
     Flower(String name){
         this.name = name;
         this.time = 0.0;
-        this.hp = 100;
+        this.hp = 200;
         this.currenthp = 50;
+        this.height = 0.1;
 
         this.waterunit = 10; // h2o; from txt
         this.sunlightunit = 10; // we do not affect this; from txt
@@ -112,7 +113,7 @@ public class Flower{
             currenthp = 0;
             hp = 0;
         }
-        if(currenthp == 0) {
+        if(currenthp <= 0) {
             hp = 0;
             System.out.println("Game Over");
         }
