@@ -26,7 +26,7 @@ public class TestFlower {
 
     }
 
-    public static void fileWrite(String saveFileName) throws IOException {
+    public static void fileWrite(String saveFileName, Flower flower) throws IOException {
         File save = new File(saveFileName);
         Date currentDateUnformat = new Date();
         //System.out.println(currentDateUnformat);
@@ -38,11 +38,47 @@ public class TestFlower {
             save.createNewFile();
             PrintWriter pw = new PrintWriter(save);
             pw.println(currentDate);
+            pw.println(flower.getContainer().getFood());
+            pw.println(flower.getContainer().getLove());
+            pw.println(flower.getContainer().getPosition());
+            pw.println(flower.getContainer().getSunlight());
+            pw.println(flower.getContainer().getWater());
+            pw.println(flower.getName());
+            pw.println(flower.getHp());
+            pw.println(flower.getCurrenthp());
+            pw.println(flower.getWaterunit());
+            pw.println(flower.getSunlightunit());
+            pw.println(flower.getLoveunit());
+            pw.println(flower.getFoodunit());
+            pw.println(flower.getGrowSpeed());
+            pw.println(flower.getHeight());
+            pw.println(flower.getMaxheight());
+            pw.println(flower.getTime());
+            pw.println(flower.getStage());
+            pw.println(flower.getPeriodTime());
             pw.close();
         }
         else {
             PrintWriter pw = new PrintWriter(save);
             pw.println(currentDate);
+            pw.println(flower.getContainer().getFood());
+            pw.println(flower.getContainer().getLove());
+            pw.println(flower.getContainer().getPosition());
+            pw.println(flower.getContainer().getSunlight());
+            pw.println(flower.getContainer().getWater());
+            pw.println(flower.getName());
+            pw.println(flower.getHp());
+            pw.println(flower.getCurrenthp());
+            pw.println(flower.getWaterunit());
+            pw.println(flower.getSunlightunit());
+            pw.println(flower.getLoveunit());
+            pw.println(flower.getFoodunit());
+            pw.println(flower.getGrowSpeed());
+            pw.println(flower.getHeight());
+            pw.println(flower.getMaxheight());
+            pw.println(flower.getTime());
+            pw.println(flower.getStage());
+            pw.println(flower.getPeriodTime());
             pw.close();
         }
 
@@ -63,6 +99,20 @@ public class TestFlower {
         return newNumber;
     }
 
+    public static double readHours(String fileName) throws FileNotFoundException {
+        File file = new File(fileName);
+        Scanner sc = new Scanner(file);
+
+        String saved = sc.nextLine();
+        String [] savedDivided = saved.split(":");
+        int savedHour = Integer.parseInt(savedDivided[0]);
+
+
+        return savedHour;
+    }
+
+
+
     public static double timeDifference(String saved, String current) {
         int hourDifference;
         String [] savedDivided = saved.split(":");
@@ -80,7 +130,7 @@ public class TestFlower {
         int savedHour = Integer.parseInt(savedDivided[0]);
         int currentHour = Integer.parseInt(currentDivided[0]);
 
-        // Programmeerimisharjutused (LTAT.03.007) 2019/2020 1.loengu programm 
+        // Programmeerimisharjutused (LTAT.03.007) 2019/2020 1.loengu programm
         int[] months = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         int dayDifference = 0;
 
@@ -115,6 +165,14 @@ public class TestFlower {
         hourDifference += currentHour-savedHour;
 
         return hourDifference;
+    }
+
+    public static void sunlightDifference(String saved, String current){
+        double hours = timeDifference(saved, current);
+        double days = hours%24;
+
+
+
     }
 
 
