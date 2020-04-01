@@ -31,10 +31,10 @@ public class Flower{
     private double height;
     private double maxheight;//from txt
 
-    private double time; // type ?  timestamp regulate cycling of consumption
+    private int time; // type ?  timestamp regulate cycling of consumption
 
     private int stage; // regulate needed amount of resources for hp by * ... all counters
-    private  double periodTime; // max time of each stage, if not -> dead; from txt
+    private  int periodTime; // max time of each stage, if not -> dead; from txt
 
 
     /**
@@ -43,7 +43,7 @@ public class Flower{
      */
     Flower(String name){
         this.name = name;
-        this.time = 0.0;
+        this.time = 0;
         this.hp = 100;
         this.currenthp = 50;
 
@@ -74,7 +74,7 @@ public class Flower{
      * @param stage int
      * @param periodTime ?
      */
-    public Flower(String name, Container container, int hp, int currenthp, double waterunit, double sunlightunit, double loveunit, double foodunit, double growSpeed, double height, double maxheight, double time, int stage, double periodTime) {
+    public Flower(String name, Container container, int hp, int currenthp, double waterunit, double sunlightunit, double loveunit, double foodunit, double growSpeed, double height, double maxheight, int time, int stage, int periodTime) {
         this.name = name;
         this.container = container;
         this.hp = hp;
@@ -216,9 +216,7 @@ public class Flower{
         return container;
     }
 
-    public void setContainer(Container container) {
-        this.container = container;
-    }
+    public void setContainer(Container container) { this.container = container; }
 
     public int getHp() {
         return hp;
@@ -296,7 +294,7 @@ public class Flower{
         return time;
     }
 
-    public void setTime(double time) {
+    public void setTime(int time) {
         this.time = time;
     }
 
@@ -312,7 +310,7 @@ public class Flower{
         return periodTime;
     }
 
-    public void setPeriodTime(double periodTime) {
+    public void setPeriodTime(int periodTime) {
         this.periodTime = periodTime;
     }
 

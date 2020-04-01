@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -22,7 +23,22 @@ public class TestFlower {
         System.out.println(flower1);
         */
 
-        System.out.println(readReact("test.txt"));
+        System.out.println(readTimePassed("test.txt"));
+
+    }
+
+    public static void create(String fileName) throws IOException {
+
+        File file = new File(fileName);
+        Scanner sc = new Scanner(file);
+        if(sc.nextLine()=="0"){
+            Scanner scan = new Scanner(System.in);
+            System.out.print("Mis nimi tahad oma lillele anda? ");
+            String name = scan.next();
+            Flower flower = new Flower(name);
+
+            fileWrite(fileName, flower);
+        }
 
     }
 
@@ -34,32 +50,8 @@ public class TestFlower {
         String currentDate = format.format(currentDateUnformat);
         //System.out.println(currentDate);
 
-        if(!save.exists()) {
-            save.createNewFile();
             PrintWriter pw = new PrintWriter(save);
-            pw.println(currentDate);
-            pw.println(flower.getContainer().getFood());
-            pw.println(flower.getContainer().getLove());
-            pw.println(flower.getContainer().getPosition());
-            pw.println(flower.getContainer().getSunlight());
-            pw.println(flower.getContainer().getWater());
-            pw.println(flower.getName());
-            pw.println(flower.getHp());
-            pw.println(flower.getCurrenthp());
-            pw.println(flower.getWaterunit());
-            pw.println(flower.getSunlightunit());
-            pw.println(flower.getLoveunit());
-            pw.println(flower.getFoodunit());
-            pw.println(flower.getGrowSpeed());
-            pw.println(flower.getHeight());
-            pw.println(flower.getMaxheight());
-            pw.println(flower.getTime());
-            pw.println(flower.getStage());
-            pw.println(flower.getPeriodTime());
-            pw.close();
-        }
-        else {
-            PrintWriter pw = new PrintWriter(save);
+            pw.println("1");
             pw.println(currentDate);
             pw.println(flower.getContainer().getFood());
             pw.println(flower.getContainer().getLove());
@@ -82,28 +74,75 @@ public class TestFlower {
             pw.close();
         }
 
+
+    public static void fileRead (String fileName, Flower flower) throws FileNotFoundException {
+        ArrayList<String> parameters = new ArrayList<>();
+        File file = new File(fileName);
+        Scanner sc = new Scanner(file);
+
+        while (sc.hasNextLine()){
+            String str = sc.nextLine();
+            parameters.add(str);
+        }
+
+        Container thisConteiner = flower.getContainer();
+        thisConteiner.setFood(Double.parseDouble(parameters.get(2)));
+        thisConteiner.setLove(Double.parseDouble(parameters.get(3)));
+        thisConteiner.setPosition(Integer.parseInt(parameters.get(4)));
+        thisConteiner.setSunlight(Double.parseDouble(parameters.get(5)));
+        thisConteiner.setWater(Double.parseDouble(parameters.get(6)));
+        flower.setContainer(thisConteiner);
+        flower.setName(parameters.get(7));
+        flower.setHp(Integer.parseInt(parameters.get(8)));
+        flower.setCurrenthp(Integer.parseInt(parameters.get(9)));
+        flower.setWaterunit(Double.parseDouble(parameters.get(10)));
+        flower.setSunlightunit(Double.parseDouble(parameters.get(11)));
+        flower.setLoveunit(Double.parseDouble(parameters.get(12)));
+        flower.setFoodunit(Double.parseDouble(parameters.get(13)));
+        flower.setGrowSpeed(Double.parseDouble(parameters.get(14)));
+        flower.setHeight(Double.parseDouble(parameters.get(15)));
+        flower.setMaxheight(Double.parseDouble(parameters.get(16)));
+        flower.setTime(Integer.parseInt(parameters.get(17)));
+        flower.setStage(Integer.parseInt(parameters.get(18)));
+        flower.setPeriodTime((Integer.parseInt(parameters.get(19))));
+
+
+
+
     }
-    static double oldNumber = 1;
-    public static double readReact(String fileName) throws FileNotFoundException {
+
+    public static double readTimePassed(String fileName) throws FileNotFoundException {
+        ArrayList<String> parameters = new ArrayList<>();
         File file = new File(fileName);
         Scanner sc = new Scanner(file);
         Date currentDateUnformate = new Date();
         SimpleDateFormat format = new SimpleDateFormat("hh:dd:MM:yyyy");
         String currentDate = format.format(currentDateUnformate);
 
-        String saved = sc.nextLine();
+        while (sc.hasNextLine()){
+            String str = sc.nextLine();
+            parameters.add(str);
+        }
+
+        String saved = parameters.get(1);
         String current = currentDate;
 
-        double newNumber =  oldNumber* timeDifference(saved, current);
+        double timePassed = timeDifference(saved, current);
 
-        return newNumber;
+        return timePassed;
     }
 
     public static double readHours(String fileName) throws FileNotFoundException {
         File file = new File(fileName);
         Scanner sc = new Scanner(file);
+        ArrayList<String> parameters = new ArrayList<>();
 
-        String saved = sc.nextLine();
+        while (sc.hasNextLine()){
+            String str = sc.nextLine();
+            parameters.add(str);
+        }
+
+        String saved = parameters.get(1);
         String [] savedDivided = saved.split(":");
         int savedHour = Integer.parseInt(savedDivided[0]);
 
