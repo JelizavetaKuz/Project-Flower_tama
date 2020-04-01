@@ -26,10 +26,29 @@ public class Container {
 
     // TODO - here we have todo the day change instead the same period night 0, midday 2, morning and evening 1, rotation
     // instead of change position
-    public void updateposition(){
+
+    /**
+     * By time changes position, simulate flow of sunlight
+     * @param time
+     */
+    public void updateposition(int time){
+        if(time < 7 || time >= 22){
+            position = 0;
+            sunlight += 5;
+        }
+        else if(time < 11 || time>= 17){
+            position = 1;
+            sunlight += 15;
+        }
+        else {
+            position = 2;
+            sunlight += 30;
+        }
         // update time to set position
         //LocalTime time = LocalTime();
     }
+
+
 
     public double getWater() {
         return water;
