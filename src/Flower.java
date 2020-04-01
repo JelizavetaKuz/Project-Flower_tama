@@ -45,6 +45,14 @@ public class Flower{
         this.name = name;
         this.time = 0.0;
         this.hp = 100;
+
+        this.waterunit = 10; // h2o; from txt
+        this.sunlightunit = 10; // we do not affect this; from txt
+        this.loveunit = 10; // co2; from txt
+        this.foodunit = 3; // nutrition; from txt
+
+        this.maxheight = 200;
+        this.stage = 1;
         this.container = new Container();
     }
 
