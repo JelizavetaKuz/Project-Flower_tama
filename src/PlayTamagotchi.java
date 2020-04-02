@@ -22,12 +22,16 @@ public class PlayTamagotchi {
                 if (daytime > 23)
                     daytime = 1;
                 else daytime++;
-
+            }
+            if(flower.getCurrenthp()<=0) {
+                endGame(fileName, flower);
+                break;
             }
             if(!HumanBeing.isRun())
                 break;
             FileConnection.fileWrite(fileName, flower);
             HumanBeing.playerAction(flower);
+
         }
 
     }
