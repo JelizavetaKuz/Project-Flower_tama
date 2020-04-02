@@ -5,7 +5,7 @@ public class Utils {
      * @return double, rounded
      */
     public static double round(double number){
-        double rounded = Math.round(number*1)/10000.0;
+        double rounded = Math.round(number*1000)/1000.00;
         return rounded;
     }
 }

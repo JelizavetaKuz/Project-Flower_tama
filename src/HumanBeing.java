@@ -63,10 +63,12 @@ public class HumanBeing {
             checkstats(flower);
         else if (choise.toLowerCase().equals("exit"))
             run = false;
-        else if (choise.toLowerCase().equals("exit")) {
-            System.out.println("1. Changes happend every hour.");
+        else if (choise.toLowerCase().equals("tips")) {
+            System.out.println("1. Changes happen every hour.");
             System.out.println("2. Your flower's needs depend on a part of a day.");
             System.out.println("3. More - does not mean better. Do not overfeed your flower.");
+            System.out.println("4. Bigger grows flower - bigger grows his consumption.");
+
         }
         else
             System.out.println("\nInvalid command");
