@@ -3,8 +3,8 @@
 // TODO time functions, may use compareTo(Timestamp ts) or (Date o) ** Date is object
 // TODO relations between functions of watering, putting into the sunlight, talk/love/cuddling, giving the flower nutrition
 // TODO do we make difference between seasons?
-// TODO should we do grow speed? this is just param for regulation of resource consumption
-// TODO sholud we add height
+// TODO grow speed? this is just param for regulation of resource consumption
+// TODO add height
 // flower by itself is consuming sources to grow
 
 // Structure Human being inserts parameters to add in container, flower takes resources from there and grow.
@@ -28,7 +28,7 @@ public class Flower{
 
     //for grow
     private double growSpeed;
-    private double height;
+    private double high;
     private double maxheight;//from txt
 
     private double time; // type ?  timestamp regulate cycling of consumption
@@ -46,7 +46,7 @@ public class Flower{
         this.time = 0.0;
         this.hp = 200;
         this.currenthp = 50;
-        this.height = 0.1;
+        this.high = 0.1;
 
         this.waterunit = 5; // h2o; from txt
         this.sunlightunit = 5; // we do not affect this; from txt
@@ -70,13 +70,13 @@ public class Flower{
      * @param loveunit double
      * @param foodunit double
      * @param growSpeed double
-     * @param height double
+     * @param high double
      * @param maxheight double
      * @param time ?
      * @param stage int
      * @param periodTime ?
      */
-    public Flower(String name, Container container, int hp, int currenthp, double waterunit, double sunlightunit, double loveunit, double foodunit, double growSpeed, double height, double maxheight, double time, int stage, double periodTime) {
+    public Flower(String name, Container container, int hp, int currenthp, double waterunit, double sunlightunit, double loveunit, double foodunit, double growSpeed, double high, double maxheight, double time, int stage, double periodTime) {
         this.name = name;
         this.container = container;
         this.hp = hp;
@@ -86,7 +86,7 @@ public class Flower{
         this.loveunit = loveunit;
         this.foodunit = foodunit;
         this.growSpeed = growSpeed;
-        this.height = height;
+        this.high = high;
         this.maxheight = maxheight;
         this.time = time;
         this.stage = stage;
@@ -94,16 +94,16 @@ public class Flower{
     }
 
     /**
-     * Method for activation of flower methods
+     * Method for activation of flower methods, consume, update hp level, update high
      */
     public void grow(int daytime){
         this.container.updateposition(daytime);
         consume();
         sethp();
         setSpeed();
-        height += growSpeed;
-        if (height<0)
-            height=0;
+        high += growSpeed;
+        if (high <0)
+            high =0;
         int currentstage = stage;
         setstage();
         if(currentstage != stage ){
@@ -123,13 +123,13 @@ public class Flower{
     }
 
     /**
-     * Method for level switcher creation
+     * Method for level switcher
      */
     protected void setstage(){
         double changevalue = maxheight * 0.25;
-        if(height > changevalue*2) stage = 4;
-        else if(height > changevalue*1.5) stage = 3;
-        else if(height > changevalue*0.) stage = 2;
+        if(high > changevalue*2) stage = 4;
+        else if(high > changevalue*1.5) stage = 3;
+        else if(high > changevalue*0.) stage = 2;
         else stage = 1;
     }
 
@@ -167,7 +167,7 @@ public class Flower{
     }
 
     /**
-     * Method for consuming all resources
+     * Method for consuming all kinds of resources
      */
     protected void consume(){
         switch (container.getPosition()){
@@ -197,7 +197,7 @@ public class Flower{
 
     /**
      * Method for level parameter switcher creation
-     * @return
+     * @return int, level
      */
     protected int setmodifier(){
         switch (stage){
@@ -260,9 +260,9 @@ public class Flower{
 
     public void setGrowSpeed(double growSpeed) { this.growSpeed = growSpeed; }
 
-    public double getHeight() { return height; }
+    public double getHigh() { return high; }
 
-    public void setHeight(double height) { this.height = height; }
+    public void setHigh(double high) { this.high = high; }
 
     public double getMaxheight() { return maxheight; }
 
@@ -292,7 +292,7 @@ public class Flower{
                 ", loveunit=" + loveunit +
                 ", foodunit=" + foodunit +
                 ", growSpeed=" + growSpeed +
-                ", height=" + height +
+                ", height=" + high +
                 ", maxheight=" + maxheight +
                 ", time=" + time +
                 ", stage=" + stage +

@@ -1,12 +1,7 @@
-import com.sun.jdi.IntegerValue;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,7 +9,11 @@ import java.util.Scanner;
 
 public class FileConnection {
 
-
+    /**
+     * Create file and flower object at start
+     * @param fileName
+     * @throws IOException
+     */
     public static void create(String fileName) throws IOException {
 
         File file = new File(fileName);
@@ -47,6 +46,12 @@ public class FileConnection {
 
     }
 
+    /**
+     * File write on close.
+     * @param saveFileName String
+     * @param flower Flower
+     * @throws IOException
+     */
     public static void fileWrite(String saveFileName, Flower flower) throws IOException {
         File save = new File(saveFileName);
         Date currentDateUnformat = new Date();
@@ -71,7 +76,7 @@ public class FileConnection {
             pw.println(flower.getLoveunit());
             pw.println(flower.getFoodunit());
             pw.println(flower.getGrowSpeed());
-            pw.println(flower.getHeight());
+            pw.println(flower.getHigh());
             pw.println(flower.getMaxheight());
             pw.println(flower.getTime());
             pw.println(flower.getStage());
@@ -80,6 +85,12 @@ public class FileConnection {
     }
 
 
+    /**
+     * Getting all states of flower at start
+     * @param fileName String
+     * @param flower Flower
+     * @throws FileNotFoundException
+     */
     public static void fileRead (String fileName, Flower flower) throws FileNotFoundException {
         ArrayList<String> parameters = new ArrayList<>();
         File file = new File(fileName);
@@ -106,7 +117,7 @@ public class FileConnection {
         flower.setLoveunit(Double.parseDouble(parameters.get(12)));
         flower.setFoodunit(Double.parseDouble(parameters.get(13)));
         flower.setGrowSpeed(Double.parseDouble(parameters.get(14)));
-        flower.setHeight(Double.parseDouble(parameters.get(15)));
+        flower.setHigh(Double.parseDouble(parameters.get(15)));
         flower.setMaxheight(Double.parseDouble(parameters.get(16)));
         flower.setTime(Double.parseDouble(parameters.get(17)));
         flower.setStage(Integer.parseInt(parameters.get(18)));
@@ -117,6 +128,12 @@ public class FileConnection {
 
     }
 
+    /**
+     * Get period of time between last time log and now
+     * @param fileName String
+     * @return double, how much time has passed
+     * @throws FileNotFoundException
+     */
     public static double readTimePassed(String fileName) throws FileNotFoundException {
         ArrayList<String> parameters = new ArrayList<>();
         File file = new File(fileName);
@@ -138,6 +155,12 @@ public class FileConnection {
         return timePassed;
     }
 
+    /**
+     * Read time from file
+     * @param fileName String
+     * @return int, time
+     * @throws FileNotFoundException
+     */
     public static int readHours(String fileName) throws FileNotFoundException {
         File file = new File(fileName);
         Scanner sc = new Scanner(file);
@@ -157,7 +180,12 @@ public class FileConnection {
     }
 
 
-
+    /**
+     * Method to calculate how much time has passed
+     * @param saved String, from file
+     * @param current String, current date
+     * @return double, difference
+     */
     public static double timeDifference(String saved, String current) {
         int hourDifference;
         String [] savedDivided = saved.split(":");

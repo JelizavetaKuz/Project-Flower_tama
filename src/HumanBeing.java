@@ -1,10 +1,3 @@
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class HumanBeing {
@@ -55,6 +48,10 @@ public class HumanBeing {
     }
 
 
+    /**
+     * Method, that describes human actions and switching between them.
+     * @param flower Flower
+     */
     public static void playerAction(Flower flower){
         Scanner scan = new Scanner(System.in);
         System.out.print("\nWhould you like to check your flower, add something or exit the game? \n(write \"check\", \"add\" or \"exit\")\n");
@@ -75,19 +72,26 @@ public class HumanBeing {
             System.out.println("\nInvalid command");
     }
 
+    /**
+     * Shows info about flower and container
+     * @param flower Flower
+     */
     public static void checkstats(Flower flower){
         System.out.println(flower.getName() + "'s stats:");
         System.out.println("Health: " + flower.getCurrenthp());
         System.out.println("Stage of development (1- seed, 2-sprout, 3-youngster, 4-full age plant) is "+flower.getStage());
-        System.out.println("Right now it is "+ round(flower.getHeight())+" cm. high");
+        System.out.println("Right now it is "+ Utils.round(flower.getHigh())+" cm. high");
         System.out.println("it is "+flower.getTime()+" hours old");
         System.out.println("Container stats:");
-        System.out.println("Water: "+ round(flower.getContainer().getWater()));
-        System.out.println("Got "+ round(flower.getContainer().getSunlight())+ " of sunlight");
-        System.out.println("Have "+ round(flower.getContainer().getLove())+ " of CO2 (love)");
-        System.out.println("Nutrition of soil: " + round(flower.getContainer().getFood()));
+        System.out.println("Water: "+ Utils.round(flower.getContainer().getWater()));
+        System.out.println("Got "+ Utils.round(flower.getContainer().getSunlight())+ " of sunlight");
+        System.out.println("Have "+ Utils.round(flower.getContainer().getLove())+ " of CO2 (love)");
+        System.out.println("Nutrition of soil: " + Utils.round(flower.getContainer().getFood()));
     }
 
+    /**
+     * Welcome info
+     */
     public static void satrtinfo(){
         System.out.println("Hello there, plant lover, lil gamer or whatever you are!");
         System.out.println("This game here, is simulation of growing  plants.");
@@ -95,19 +99,4 @@ public class HumanBeing {
         System.out.println("Do not forget to check it time to time and water, talk or feed it.");
     }
 
-    public static double round(double number){
-        double rounded = Math.round(number*10000)/10000.0;
-        return rounded;
-    }
-
-    public static void endGame(String fileName, Flower flower) throws IOException {
-        System.out.println("\nI'm very sorry, but your flower has died in your absence.");
-        System.out.println("It was " + flower.getTime() + " hours old and gain " + round(flower.getHeight()) + ". cm tall.");
-        System.out.println("If you want to try again, rerun this game.");
-        File save = new File(fileName);
-        try (PrintWriter pw = new PrintWriter(save)) {
-            pw.println("1");}
-        run = false;
-
-    }
 }
