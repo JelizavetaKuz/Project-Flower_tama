@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,6 +29,21 @@ public class FileConnection {
 
             fileWrite(fileName, flower);
         }
+        else{
+            try(Scanner sc = new Scanner(file)){
+                String isDead = sc.nextLine();
+                if(isDead.equals("1")){
+                    file.createNewFile();
+                    Scanner scan = new Scanner(System.in);
+                    System.out.println("\nYou can try once again!");
+                    System.out.println("How would you like to name your new flower?: ");
+                    String name = scan.next();
+                    Flower flower = new Flower(name);
+
+                    fileWrite(fileName, flower);
+                }
+            }
+        }
 
     }
 
@@ -37,8 +55,8 @@ public class FileConnection {
         String currentDate = format.format(currentDateUnformat);
         //System.out.println(currentDate);
 
-            PrintWriter pw = new PrintWriter(save);
-            pw.println("1");
+        try (PrintWriter pw = new PrintWriter(save)) {
+            pw.println("0");
             pw.println(currentDate);
             pw.println(flower.getContainer().getFood());
             pw.println(flower.getContainer().getLove());
@@ -58,18 +76,19 @@ public class FileConnection {
             pw.println(flower.getTime());
             pw.println(flower.getStage());
             pw.println(flower.getPeriodTime());
-            pw.close();
         }
+    }
 
 
     public static void fileRead (String fileName, Flower flower) throws FileNotFoundException {
         ArrayList<String> parameters = new ArrayList<>();
         File file = new File(fileName);
-        Scanner sc = new Scanner(file);
+        try(Scanner sc = new Scanner(file)) {
 
-        while (sc.hasNextLine()){
-            String str = sc.nextLine();
-            parameters.add(str);
+            while (sc.hasNextLine()) {
+                String str = sc.nextLine();
+                parameters.add(str);
+            }
         }
 
         Container thisConteiner = flower.getContainer();
@@ -192,15 +211,5 @@ public class FileConnection {
 
         return hourDifference;
     }
-
-    public static void sunlightDifference(String saved, String current){
-        double hours = timeDifference(saved, current);
-        double days = hours%24;
-
-
-
-    }
-
-
 
 }

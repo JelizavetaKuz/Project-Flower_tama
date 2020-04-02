@@ -34,7 +34,7 @@ public class Container {
     public void updateposition(int time){
         if(time < 7 || time >= 22){
             position = 0;
-            sunlight += 5;
+            sunlight += 4;
         }
         else if(time < 11 || time>= 17){
             position = 1;

@@ -9,22 +9,24 @@ public class PlayTamagotchi {
         FileConnection.fileRead(fileName,flower);
         while (HumanBeing.isRun()) {
             double hours = FileConnection.readTimePassed(fileName);
-            flower.setTime(flower.getTime()+hours);
             int daytime = FileConnection.readHours(fileName);
             for (int i = 0; i < hours; i++) {
-                if (daytime > 24)
+                flower.setTime(flower.getTime()+1);
+                if(flower.getCurrenthp()<=0) {
+                    HumanBeing.endGame(fileName, flower);
+                    break;
+                }
+                flower.grow(daytime);
+                if (daytime > 23)
                     daytime = 1;
                 else daytime++;
-                flower.grow(daytime);
+
             }
+            if(!HumanBeing.isRun())
+                break;
             FileConnection.fileWrite(fileName, flower);
             HumanBeing.playerAction(flower);
         }
-
-
-
-
-
 
     }
 }

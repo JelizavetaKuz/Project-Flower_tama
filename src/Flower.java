@@ -53,10 +53,10 @@ public class Flower{
         this.loveunit = 5; // co2; from txt
         this.foodunit = 2; // nutrition; from txt
 
-        this.maxheight = 200;
+        this.maxheight = 20;
         this.stage = 1;
         this.container = new Container();
-        this.periodTime = 24.0;
+        this.periodTime = 240.0;
     }
 
     /**
@@ -101,15 +101,17 @@ public class Flower{
         consume();
         sethp();
         setSpeed();
-        height += height*growSpeed;
+        height += growSpeed;
+        if (height<0)
+            height=0;
         int currentstage = stage;
         setstage();
         if(currentstage != stage ){
             int modifier = setmodifier();
-            waterunit *= modifier;
-            foodunit *= modifier;
-            loveunit *= modifier;
-            sunlightunit *= modifier;
+            waterunit += modifier;
+            foodunit += modifier;
+            loveunit += modifier;
+            sunlightunit += modifier;
         }
         if(time > periodTime){
             currenthp = 0;
@@ -117,7 +119,6 @@ public class Flower{
         }
         if(currenthp <= 0) {
             hp = 0;
-            System.out.println("Game Over");
         }
     }
 
@@ -126,9 +127,9 @@ public class Flower{
      */
     protected void setstage(){
         double changevalue = maxheight * 0.25;
-        if(height > changevalue*3) stage = 4;
-        else if(height > changevalue*2) stage = 3;
-        else if(height > changevalue) stage = 2;
+        if(height > changevalue*2) stage = 4;
+        else if(height > changevalue*1.5) stage = 3;
+        else if(height > changevalue*0.) stage = 2;
         else stage = 1;
     }
 
@@ -137,7 +138,7 @@ public class Flower{
      */
     protected void setSpeed(){
         if (currenthp < hp*0.1){
-            growSpeed = -5;
+            growSpeed -= 1;
         }else if(currenthp < hp*0.55){
             growSpeed += 0.5;
         }else{
@@ -150,18 +151,18 @@ public class Flower{
      */
     protected void sethp(){
         double maxdifer = 0.15;
-        if(container.getFood()< foodunit*maxdifer || container.getFood() > foodunit*maxdifer ){
-            currenthp -= 5;
-        }else if(currenthp < hp) currenthp+= 5;
-        if(container.getWater()< waterunit*maxdifer || container.getWater() > waterunit*maxdifer ){
-            currenthp -= 5;
-        }else if(currenthp < hp) currenthp+= 5;
-        if(container.getLove()< loveunit*maxdifer || container.getLove() > loveunit*maxdifer ){
-            currenthp -= 5;
-        }else if(currenthp < hp) currenthp+= 5;
-        if(container.getSunlight()< waterunit*maxdifer || container.getFood() > waterunit*maxdifer ){
-            currenthp -= 5;
-        }else if(currenthp < hp) currenthp+= 5;
+        if(container.getFood()< foodunit*maxdifer || container.getFood() > foodunit*(15+maxdifer) ){
+            currenthp -= 2;
+        }else if(currenthp < hp) currenthp+= 2;
+        if(container.getWater()< waterunit*maxdifer || container.getWater() > waterunit*(20+maxdifer) ){
+            currenthp -= 2;
+        }else if(currenthp < hp) currenthp+= 2;
+        if(container.getLove()< loveunit*maxdifer || container.getLove() > loveunit*(20+maxdifer) ){
+            currenthp -= 2;
+        }else if(currenthp < hp) currenthp+= 2;
+        if(container.getSunlight()< sunlightunit*maxdifer || container.getSunlight() > sunlightunit*(40+maxdifer) ){
+            currenthp -= 2;
+        }else if(currenthp < hp) currenthp+= 2;
 
     }
 
@@ -173,22 +174,22 @@ public class Flower{
             case 0:
                 growSpeed = 0.015; //
                 container.setSunlight(container.getSunlight() - sunlightunit);
-                container.setLove(container.getLove() - loveunit);
-                container.setWater(container.getWater() - waterunit *4);
+                container.setLove(container.getLove() - loveunit*0.7);
+                container.setWater(container.getWater() - waterunit *0.7);
                 container.setFood(container.getFood() - foodunit *0.3);
                 break;
             case 1:
                 growSpeed = 0.001; //
                 container.setSunlight(container.getSunlight() - sunlightunit *2);
-                container.setLove(container.getLove() - loveunit *2);
-                container.setWater(container.getWater() - waterunit *2);
+                container.setLove(container.getLove() - loveunit *1.2);
+                container.setWater(container.getWater() - waterunit *1.2);
                 container.setFood(container.getFood() - foodunit *0.2);
                 break;
             case 2:
                 growSpeed = 0.0005; //
-                container.setSunlight(container.getSunlight() - sunlightunit *4);
-                container.setLove(container.getLove() - loveunit *3);
-                container.setWater(container.getWater() - waterunit *1);
+                container.setSunlight(container.getSunlight() - sunlightunit *3);
+                container.setLove(container.getLove() - loveunit *1.8);
+                container.setWater(container.getWater() - waterunit*1.8);
                 container.setFood(container.getFood() - foodunit *0.1);
                 break;
         }
@@ -200,10 +201,10 @@ public class Flower{
      */
     protected int setmodifier(){
         switch (stage){
-            case 4: return 4;
-            case 3: return 3;
-            case 2: return 2;
-            default:return 1;
+            case 4: return 3;
+            case 3: return 2;
+            case 2: return 1;
+            default:return 0;
         }
     }
 
@@ -241,81 +242,43 @@ public class Flower{
         return waterunit;
     }
 
-    public void setWaterunit(double waterunit) {
-        this.waterunit = waterunit;
-    }
+    public void setWaterunit(double waterunit) {this.waterunit = waterunit; }
 
-    public double getSunlightunit() {
-        return sunlightunit;
-    }
+    public double getSunlightunit() { return sunlightunit; }
 
-    public void setSunlightunit(double sunlightunit) {
-        this.sunlightunit = sunlightunit;
-    }
+    public void setSunlightunit(double sunlightunit) { this.sunlightunit = sunlightunit; }
 
-    public double getLoveunit() {
-        return loveunit;
-    }
+    public double getLoveunit() { return loveunit; }
 
-    public void setLoveunit(double loveunit) {
-        this.loveunit = loveunit;
-    }
+    public void setLoveunit(double loveunit) { this.loveunit = loveunit; }
 
-    public double getFoodunit() {
-        return foodunit;
-    }
+    public double getFoodunit() { return foodunit; }
 
-    public void setFoodunit(double foodunit) {
-        this.foodunit = foodunit;
-    }
+    public void setFoodunit(double foodunit) { this.foodunit = foodunit; }
 
-    public double getGrowSpeed() {
-        return growSpeed;
-    }
+    public double getGrowSpeed() { return growSpeed; }
 
-    public void setGrowSpeed(double growSpeed) {
-        this.growSpeed = growSpeed;
-    }
+    public void setGrowSpeed(double growSpeed) { this.growSpeed = growSpeed; }
 
-    public double getHeight() {
-        return height;
-    }
+    public double getHeight() { return height; }
 
-    public void setHeight(double height) {
-        this.height = height;
-    }
+    public void setHeight(double height) { this.height = height; }
 
-    public double getMaxheight() {
-        return maxheight;
-    }
+    public double getMaxheight() { return maxheight; }
 
-    public void setMaxheight(double maxheight) {
-        this.maxheight = maxheight;
-    }
+    public void setMaxheight(double maxheight) { this.maxheight = maxheight; }
 
-    public double getTime() {
-        return time;
-    }
+    public double getTime() { return time; }
 
-    public void setTime(double time) {
-        this.time = time;
-    }
+    public void setTime(double time) { this.time = time; }
 
-    public int getStage() {
-        return stage;
-    }
+    public int getStage() { return stage; }
 
-    public void setStage(int stage) {
-        this.stage = stage;
-    }
+    public void setStage(int stage) { this.stage = stage; }
 
-    public double getPeriodTime() {
-        return periodTime;
-    }
+    public double getPeriodTime() { return periodTime; }
 
-    public void setPeriodTime(double periodTime) {
-        this.periodTime = periodTime;
-    }
+    public void setPeriodTime(double periodTime) { this.periodTime = periodTime; }
 
     @Override
     public String toString() {
