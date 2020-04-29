@@ -94,11 +94,11 @@ public class HumanBeing {
     /**
      * Welcome info
      */
-    public static void satrtinfo(){
-        System.out.println("Hello there, plant lover, lil gamer or whatever you are!");
-        System.out.println("This game here, is simulation of growing  plants.");
-        System.out.println("You just need to plant a little seed and watch it grow.");
-        System.out.println("Do not forget to check it time to time and water, talk or feed it.");
+    public static String satrtinfo(){
+        return "Hello there, plant lover, lil gamer or whatever you are!\n" +
+                "This game here, is simulation of growing  plants.\n"+
+                "You just need to plant a little seed and watch it grow.\n"+
+                "Do not forget to check it time to time and water, talk or feed it.\n";
     }
 
 }

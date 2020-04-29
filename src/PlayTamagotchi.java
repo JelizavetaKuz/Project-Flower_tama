@@ -3,8 +3,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class PlayTamagotchi {
-    public static void main(String[] args) throws IOException {
-        HumanBeing.satrtinfo();
+    public static void startGame() throws IOException {
+        System.out.println(HumanBeing.satrtinfo());
         Flower flower = new Flower("Basic");
         String fileName = "flower.txt";
         FileConnection.create(fileName);
