@@ -1,4 +1,5 @@
 package main.java;
+import java.io.IOException;
 import java.util.Scanner;
 
 
@@ -38,16 +39,15 @@ public class HumanBeingGrad {
      * Shows info about flower and container
      * @param flower Flower
      */
-    public static String checkstats(Flower flower){
-        return "Mike" + "\n"+ "Like";
-
-
-
-
-                /*
+    public static String checkstats() throws IOException {
+        Flower flower = new Flower("Basic");
+        String fileName = "flower.txt";
+        FileConnection.create(fileName);
+        FileConnection.fileRead(fileName,flower);
+        return
         flower.getName() + "'s stats:\n"+
         "Health: " + flower.getCurrenthp()+"\n"+
-        "Stage of development (1- seed, 2-sprout, 3-youngster, 4-full age plant) is "+flower.getStage())+"\n"+
+        "Stage of development (1- seed, 2-sprout, 3-youngster, 4-full age plant) is "+flower.getStage()+"\n"+
         "Right now it is "+ Utils.round(flower.getHigh())+" cm. high\n"+
         "it is "+flower.getTime()+" hours old\n"+
         "Container stats:\n"+
@@ -56,8 +56,6 @@ public class HumanBeingGrad {
         "Have "+ Utils.round(flower.getContainer().getLove())+ " of CO2 (love)\n"+
         "Nutrition of soil: " + Utils.round(flower.getContainer().getFood());
 
-
-                 */
     }
 
     /**

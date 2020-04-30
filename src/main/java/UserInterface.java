@@ -7,14 +7,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
@@ -30,7 +28,14 @@ public class UserInterface extends Application {
         primaryStage.setResizable(false);
         Group root = new Group();
 
-        Scene scene = new Scene(root, 600, 400);
+        Scene startScene = new Scene(root, 600, 400);
+        //Scene mainScene = new Scene(root,600, 400);
+        HBox addResources = new HBox();
+
+
+
+
+
 
         int width = 500; // max hp
         GridPane hp = new GridPane();
@@ -51,6 +56,12 @@ public class UserInterface extends Application {
         root.getChildren().add(hp);
 
 
+
+
+
+
+
+        //PlayTamagotchi.startGame();
         Text textStart = new Text();
         textStart.setY(100);
         Button stratButton = new Button("Start");
@@ -59,27 +70,65 @@ public class UserInterface extends Application {
             @Override
             public void handle(MouseEvent mouseEvent){
                 textStart.setText(HumanBeing.satrtinfo());
+                try {
+                    PlayTamagotchi.createflower();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
         root.getChildren().add(textStart);
         root.getChildren().add(stratButton);
+
+        TextField setflowerName = new TextField();
+        String flowerName;
+
+
+        //not needed right now
         Button newgameButton = new Button("New game");
+        newgameButton.setOnMouseClicked(mouseEvent -> {setflowerName.setPromptText("Flower name"); setflowerName.getText();});
+
+
+
 
         Text text = new Text();
         Button addButton = new Button("Add resources");
+
+
+
         Button checkButton = new Button("Check stata");
-        checkButton.setOnMouseClicked(mouseEvent -> {text.setText("stats");});
+        checkButton.setOnMouseClicked(mouseEvent -> {
+            try {
+                text.setText(HumanBeingGrad.checkstats());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        });
         checkButton.setLayoutY(300);
-        text.setY(400);
+        text.setY(50);
         root.getChildren().add(text);
         root.getChildren().add(checkButton);
+
+
+
+
 
         Button addWater = new Button("Wather");
         Button addFood = new Button("Food");
         Button addLove = new Button("Love");
 
-        primaryStage.setScene(scene);
-        scene.setFill(Color.rgb(0, 102, 102));
+
+
+
+
+        primaryStage.getOnHiding();
+
+
+
+
+        primaryStage.setScene(startScene);
+        startScene.setFill(Color.rgb(0, 102, 102));
         primaryStage.show();
 
     }

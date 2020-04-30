@@ -4,6 +4,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class PlayTamagotchi {
+
+    public static Flower createflower() throws IOException {
+        Flower flower = new Flower("Basic");
+        String fileName = "flower.txt";
+        FileConnection.create(fileName);
+        FileConnection.fileRead(fileName,flower);
+        return flower;
+    }
+
     public static void startGame() throws IOException {
         System.out.println(HumanBeing.satrtinfo());
         Flower flower = new Flower("Basic");
