@@ -10,12 +10,7 @@ import java.util.Scanner;
 
 public class FileConnection {
 
-    /**
-     * Create file and flower object at start
-     *
-     * @param fileName
-     * @throws IOException
-     */
+
     /*
     public static void fileCreate(String fileName) throws IOException {
 
@@ -65,6 +60,12 @@ public class FileConnection {
                     return 0;
             }
     }
+    /**
+     * Create file and flower object at start
+     * @param fileName String, file name (constant)
+     * @param flowerName String, name of flower
+     * @throws IOException
+     */
 
     public static void fileCreate(String fileName, String flowerName) throws IOException {
         File file = new File(fileName);
@@ -73,6 +74,12 @@ public class FileConnection {
         fileWrite(fileName, flower);
     }
 
+    /**
+     * method, that gets flower name from file, if it is
+     * @param fileName string, file name (constant)
+     * @return String,
+     * @throws FileNotFoundException
+     */
     public static String getFlowerName(String fileName)throws FileNotFoundException {
         ArrayList<String> parameters = new ArrayList<>();
         File file = new File(fileName);

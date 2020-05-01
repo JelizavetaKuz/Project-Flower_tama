@@ -6,6 +6,13 @@ import java.io.PrintWriter;
 
 public class PlayTamagotchi {
 
+
+    /**
+     * Method that creates new flower and file for it
+     * @param flowerName String, flower name for search
+     * @return Flower, new flower
+     * @throws IOException
+     */
     public static Flower createflower(String flowerName) throws IOException {
         Flower flower = new Flower("Basic");
         String fileName = "flower.txt";
@@ -27,6 +34,13 @@ public class PlayTamagotchi {
 
     }
 
+
+    /**
+     *Method, that up dates all the stats for time and file write
+     * @param fileName String, constant filename
+     * @param flower Flower, created flower
+     * @throws IOException
+     */
     public static void updateFile(String fileName, Flower flower) throws IOException {
         double hours = FileConnection.readTimePassed(fileName);
         int daytime = FileConnection.readHours(fileName);
@@ -73,11 +87,12 @@ public class PlayTamagotchi {
 
         }
 
-    }
+    }*/
 
     /**
      * Notify that flower is dead
      * @param flower Flower
+     * @return String, message
      * @throws IOException
      */
     public static String endGame(Flower flower) throws IOException {

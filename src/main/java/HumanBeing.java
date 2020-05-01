@@ -12,8 +12,8 @@ public class HumanBeing {
     }
 
     /**
-     * Methods for adding resources in container
-     * @param contain Container
+     * method that adds resources
+     * @param flower Flower, needed flower
      */
     public static void addFood (Flower flower) {
         Container container = flower.getContainer();
@@ -21,18 +21,31 @@ public class HumanBeing {
         container.setFood(container.getFood() + food);
         flower.setContainer(container);
     }
+    /**
+     * method that adds resources
+     * @param flower Flower, needed flower
+     */
     public static void addLove(Flower flower) {
         Container container = flower.getContainer();
         double love = 15;
         container.setLove(container.getLove() + love);
         flower.setContainer(container);
 
-    }public static void addWater(Flower flower) {
+    }
+    /**
+     * method that adds resources
+     * @param flower Flower, needed flower
+     */
+    public static void addWater(Flower flower) {
         Container container = flower.getContainer();
         double water = 15;
         container.setWater(container.getWater() + water);
         flower.setContainer(container);
     }
+
+    /**
+     * exit form programm
+     */
     public static void exit(){
         run = false;
     }

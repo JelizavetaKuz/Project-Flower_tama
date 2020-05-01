@@ -19,11 +19,14 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+
 import java.io.IOException;
-import java.util.concurrent.Flow;
+import java.util.Stack;
+
 
 public class UserInterface extends Application {
     Flower flower;
+    int stage;
 
     public static void main(String[] args) {
         launch(args);
@@ -34,7 +37,7 @@ public class UserInterface extends Application {
         String fileName ="flower.txt";
 
         primaryStage.setTitle("Flower tamagotchi");
-        primaryStage.setResizable(false);
+        //primaryStage.setResizable(false);
 
 
 
@@ -113,7 +116,9 @@ public class UserInterface extends Application {
                             flower = PlayTamagotchi.createflower(FileConnection.getFlowerName(fileName));
                             //current hp from flower
                             runner.setX(flower.getCurrenthp());
+                            PlayTamagotchi.updateFile(fileName, flower);
                             primaryStage.setScene(mainScene);
+                            stage = flower.getStage();
                             // Screen with other buttons
                         }
                         else {
@@ -126,6 +131,40 @@ public class UserInterface extends Application {
                 } catch (IOException e) {
                     primaryStage.close();
                 }
+            }
+        });
+        mainScene.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                FlowPane paneContain = new FlowPane();
+                paneContain.setPrefSize(300,300);
+                paneContain.setBackground(new Background(new BackgroundImage(new Image("container.png",300,300,false,true),
+                        BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                        BackgroundSize.DEFAULT)));
+                //paneContain.setAlignment(Pos.BOTTOM_RIGHT);
+                paneContain.setLayoutY(180);
+                paneContain.setLayoutX(300);
+                paneContain.setVisible(true);
+
+
+                StackPane flowerPane = new StackPane();
+                flowerPane.setPrefSize(300,300);
+
+                if(stage == 1) {flowerPane.setBackground(new Background(new BackgroundImage(new Image("flower1.png",300,300,false,true),
+                        BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                        BackgroundSize.DEFAULT)));flowerPane.setLayoutX(300) ; flowerPane.setLayoutY(140);}
+                else if(stage == 2) {flowerPane.setBackground(new Background(new BackgroundImage(new Image("flower2.png",300,200,false,true),
+                        BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                        BackgroundSize.DEFAULT)));flowerPane.setLayoutX(300) ; flowerPane.setLayoutY(150); }
+                else if(stage == 3) {flowerPane.setBackground(new Background(new BackgroundImage(new Image("flower3.png",300,300,false,true),
+                        BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                        BackgroundSize.DEFAULT))); flowerPane.setLayoutX(300) ; flowerPane.setLayoutY(50);}
+                else if(stage == 4) {flowerPane.setBackground(new Background(new BackgroundImage(new Image("flower4.png",300,300,false,true),
+                        BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                        BackgroundSize.DEFAULT))); flowerPane.setLayoutX(300) ; flowerPane.setLayoutY(50);}
+
+                root.getChildren().addAll(paneContain, flowerPane);
+
             }
         });
         newgameBox.getChildren().add(textStart);
@@ -160,6 +199,7 @@ public class UserInterface extends Application {
         //not needed right now
         //Button newgameButton = new Button("New game");
         //newgameButton.setOnMouseClicked(mouseEvent -> {});
+
 
 
 
@@ -259,6 +299,7 @@ public class UserInterface extends Application {
 
 
 
+
         primaryStage.setOnHiding(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent windowEvent) {
@@ -309,6 +350,19 @@ public class UserInterface extends Application {
                 dialog.show();
             }
         });
+
+
+
+//        try{
+//        Image flower1 = new Image((new FileInputStream("flower1.jpg")));
+//        Image flower2 = new Image((new FileInputStream("flower2.jpg")));
+//        Image flower3 = new Image((new FileInputStream("flower3.jpg")));
+//        Image flower4 = new Image((new FileInputStream("flower4.jpg")));
+//        Image container = new Image((new FileInputStream("container.jpg")));
+//        } catch (IOException e){
+//            primaryStage.close();
+//        }
+
 
 
 
