@@ -1,4 +1,3 @@
-package main.java;
 public class Utils {
     /**
      * Round to 4 numbers after coma

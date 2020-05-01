@@ -1,4 +1,3 @@
-package main.java;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -88,7 +87,8 @@ public class UserInterface extends Application {
 
                 try {
                     if(FileConnection.fileCheck(fileName)==2) {
-                        textStart.setText(main.java.HumanBeing.satrtinfo());
+                        textStart.setText(HumanBeing.satrtinfo() +
+                                "\nHow would you like to name your flower?");
                         //Scan for name
                         //FileConnection.fileCreate(fileName,);
                         primaryStage.setScene(newgameScene);
@@ -96,11 +96,12 @@ public class UserInterface extends Application {
                     else {
                         if (FileConnection.fileCheck(fileName)==0) {
                             PlayTamagotchi.createflower(FileConnection.getFlowerName(fileName));
+                            //obnovit koordinatu
                             primaryStage.setScene(mainScene);
                             // Screen with other buttons
                         }
                         else {
-                            textStart.setText("You can try once again!");
+                            textStart.setText("You can try once again! \n How would you like to name your new flower?");
                             // Scan for name
                             //FileConnection.fileCreate(fileName, scanned");
                             primaryStage.setScene(newgameScene);
@@ -159,7 +160,7 @@ public class UserInterface extends Application {
                 if (flower.getCurrenthp() <= 0)
                     text.setText(PlayTamagotchi.endGame(flower));
                 else
-                    text.setText(main.java.HumanBeing.checkstats(flower));
+                    text.setText(HumanBeing.checkstats(flower));
             } catch (IOException e) {
                 e.printStackTrace();
             }

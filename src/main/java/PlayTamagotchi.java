@@ -1,4 +1,3 @@
-package main.java;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -8,11 +7,13 @@ public class PlayTamagotchi {
     public static Flower createflower(String flowerName) throws IOException {
         Flower flower = new Flower("Basic");
         String fileName = "flower.txt";
-        FileConnection.fileCreate(fileName,flowerName);
+        //FileConnection.fileCreate(fileName,flowerName);
         FileConnection.fileRead(fileName,flower);
         double hours = FileConnection.readTimePassed(fileName);
         int daytime = FileConnection.readHours(fileName);
         for (int i = 0; i < hours; i++) {
+            if(flower.getCurrenthp()<=0)
+                break;
             flower.setTime(flower.getTime()+1);
             flower.grow(daytime);
             if (daytime > 23)

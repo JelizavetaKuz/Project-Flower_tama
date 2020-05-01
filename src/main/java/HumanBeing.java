@@ -1,6 +1,3 @@
-package main.java;
-
-
 public class HumanBeing {
 
     private static boolean run = true;
@@ -10,7 +7,7 @@ public class HumanBeing {
     }
 
     public static void setRun(boolean run) {
-        main.java.HumanBeing.run = run;
+        HumanBeing.run = run;
     }
 
     /**
