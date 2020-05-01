@@ -1,4 +1,3 @@
-package main.java;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -12,7 +11,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
@@ -24,6 +22,8 @@ public class UserInterface extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+        String fileName ="flower.txt";
+
         primaryStage.setTitle("Flower tamagotchi");
         primaryStage.setResizable(false);
         Group root = new Group();
@@ -69,9 +69,25 @@ public class UserInterface extends Application {
         stratButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent){
-                textStart.setText(HumanBeing.satrtinfo());
+
+
                 try {
-                    PlayTamagotchi.createflower();
+                    if(FileConnection.fileCheck(fileName)==2) {
+                        textStart.setText(HumanBeing.satrtinfo());
+                        //Scan for name
+                        //FileConnection.fileCreate(fileName,);
+                    }
+                    else {
+                        if (FileConnection.fileCheck(fileName)==0) {
+                            PlayTamagotchi.createflower(FileConnection.getFlowerName(fileName));
+                            // Screen with other buttons
+                        }
+                        else {
+                            textStart.setText("You can try once again!");
+                            // Scan for name
+                            //FileConnection.fileCreate(fileName, scanned");
+                        }
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -99,7 +115,11 @@ public class UserInterface extends Application {
         Button checkButton = new Button("Check stata");
         checkButton.setOnMouseClicked(mouseEvent -> {
             try {
-                text.setText(HumanBeingGrad.checkstats());
+                Flower flower = PlayTamagotchi.createflower(FileConnection.getFlowerName(fileName));
+                if (flower.getCurrenthp() <= 0)
+                    text.setText(PlayTamagotchi.endGame(flower));
+                else
+                    text.setText(HumanBeing.checkstats(flower));
             } catch (IOException e) {
                 e.printStackTrace();
             }

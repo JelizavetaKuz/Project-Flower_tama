@@ -1,4 +1,3 @@
-package main.java;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,13 +11,15 @@ public class FileConnection {
 
     /**
      * Create file and flower object at start
+     *
      * @param fileName
      * @throws IOException
      */
-    public static void create(String fileName) throws IOException {
+    /*
+    public static void fileCreate(String fileName) throws IOException {
 
         File file = new File(fileName);
-        if(!file.exists()){
+        if (!file.exists()) {
             file.createNewFile();
             Scanner scan = new Scanner(System.in);
             System.out.println("You even can give him a name!");
@@ -28,11 +29,10 @@ public class FileConnection {
             Flower flower = new Flower(name);
 
             fileWrite(fileName, flower);
-        }
-        else{
-            try(Scanner sc = new Scanner(file)){
+        } else {
+            try (Scanner sc = new Scanner(file)) {
                 String isDead = sc.nextLine();
-                if(isDead.equals("1")){
+                if (isDead.equals("1")) {
                     file.createNewFile();
                     Scanner scan = new Scanner(System.in);
                     System.out.println("\nYou can try once again!");
@@ -46,6 +46,46 @@ public class FileConnection {
         }
 
     }
+
+     */
+
+    public static int fileCheck(String fileName) throws IOException {
+
+        File file = new File(fileName);
+        if (!file.exists())
+            return 2;
+
+        else
+            try (Scanner sc = new Scanner(file)) {
+                String isDead = sc.nextLine();
+                if (isDead.equals("1"))
+                    return 1;
+                else
+                    return 0;
+            }
+    }
+
+    public static void fileCreate(String fileName, String flowerName) throws IOException {
+        File file = new File(fileName);
+        file.createNewFile();
+        Flower flower = new Flower(flowerName);
+        fileWrite(fileName, flower);
+    }
+
+    public static String getFlowerName(String fileName)throws FileNotFoundException {
+        ArrayList<String> parameters = new ArrayList<>();
+        File file = new File(fileName);
+        try (Scanner sc = new Scanner(file)) {
+            String str = "";
+
+            for (int i = 0; i < 8; i++) {
+                str = sc.nextLine();
+            }
+            return str;
+        }
+    }
+
+
 
     /**
      * File write on close.

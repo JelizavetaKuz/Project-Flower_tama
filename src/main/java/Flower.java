@@ -10,8 +10,6 @@
 // Structure Human being inserts parameters to add in container, flower takes resources from there and grow.
 // In text file we save each timestamp when flower game has closed or stopped. On turning on we calculate all counters.
 
-package main.java;
-
 public class Flower{
     protected String name;
     private Container container;

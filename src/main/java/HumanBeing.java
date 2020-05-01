@@ -1,8 +1,7 @@
 import java.io.IOException;
-import java.util.Scanner;
 
 
-public class HumanBeingGrad {
+public class HumanBeing {
 
     private static boolean run = true;
 
@@ -11,7 +10,7 @@ public class HumanBeingGrad {
     }
 
     public static void setRun(boolean run) {
-        HumanBeingGrad.run = run;
+        HumanBeing.run = run;
     }
 
     /**
@@ -36,13 +35,9 @@ public class HumanBeingGrad {
 
     /**
      * Shows info about flower and container
-     * @param flower Flower
+     * @param
      */
-    public static String checkstats() throws IOException {
-        Flower flower = new Flower("Basic");
-        String fileName = "flower.txt";
-        FileConnection.create(fileName);
-        FileConnection.fileRead(fileName,flower);
+    public static String checkstats( Flower flower) throws IOException {
         return
         flower.getName() + "'s stats:\n"+
         "Health: " + flower.getCurrenthp()+"\n"+
