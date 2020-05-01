@@ -1,3 +1,4 @@
+package main.java;
 public class HumanBeing {
 
     private static boolean run = true;
@@ -14,17 +15,23 @@ public class HumanBeing {
      * Methods for adding resources in container
      * @param contain Container
      */
-    public static void addFood(Container contain) {
+    public static void addFood (Flower flower) {
+        Container container = flower.getContainer();
         double food = 10;
-        contain.setFood(contain.getFood() + food);
+        container.setFood(container.getFood() + food);
+        flower.setContainer(container);
     }
-    public static void addLove(Container contain) {
+    public static void addLove(Flower flower) {
+        Container container = flower.getContainer();
         double love = 15;
-        contain.setLove(contain.getLove() + love);
+        container.setLove(container.getLove() + love);
+        flower.setContainer(container);
 
-    }public static void addWater(Container contain) {
+    }public static void addWater(Flower flower) {
+        Container container = flower.getContainer();
         double water = 15;
-        contain.setWater(contain.getWater() + water);
+        container.setWater(container.getWater() + water);
+        flower.setContainer(container);
     }
     public static void exit(){
         run = false;
@@ -38,7 +45,7 @@ public class HumanBeing {
         return
         flower.getName() + "'s stats:\n"+
         "Health: " + flower.getCurrenthp()+"\n"+
-        "Stage of development (1- seed, 2-sprout, 3-youngster, 4-full age plant) is "+flower.getStage()+"\n"+
+        "Stage of development (1- seed, 2-sprout,\n 3-youngster, 4-full age plant) is "+flower.getStage()+"\n"+
         "Right now it is "+ Utils.round(flower.getHigh())+" cm. high\n"+
         "it is "+flower.getTime()+" hours old\n"+
         "Container stats:\n"+

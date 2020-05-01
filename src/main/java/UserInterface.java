@@ -1,3 +1,4 @@
+package main.java;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -7,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -18,8 +20,10 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.IOException;
+import java.util.concurrent.Flow;
 
 public class UserInterface extends Application {
+    Flower flower;
 
     public static void main(String[] args) {
         launch(args);
@@ -31,28 +35,37 @@ public class UserInterface extends Application {
 
         primaryStage.setTitle("Flower tamagotchi");
         primaryStage.setResizable(false);
-        Group root = new Group();
 
 
-        VBox startGame = new VBox();
+
+        FlowPane startGame = new FlowPane();
+        startGame.setAlignment(Pos.CENTER);
         Scene startScene = new Scene(startGame, 600, 400);
+
+        //startScene.setFill(Color.rgb(0, 102, 102));
         primaryStage.setScene(startScene);
-        startScene.setFill(Color.rgb(0, 102, 102));
+        BackgroundImage bg = new BackgroundImage(new Image("pikrepo.com.jpg",600,400,false,true),
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        startGame.setBackground(new Background(bg));
 
 
+        Group root = new Group();
         Scene mainScene = new Scene(root,600, 400);
+        mainScene.setFill(Color.rgb(0, 102, 102));
 
-        VBox newgameBox = new VBox();
+        HBox newgameBox = new HBox();
         Scene newgameScene = new Scene(newgameBox,600, 400);
-
-        HBox addResources = new HBox();
-
+        newgameScene.setFill(Color.rgb(0, 102, 102));
 
 
 
 
 
-        int width = 500; // max hp
+
+
+
+        int width = 200; // max, hp from flower
         GridPane hp = new GridPane();
         //hp.setPrefSize(width, 30);
         hp.getColumnConstraints().add(new ColumnConstraints(width*0.1)); // dead zone red
@@ -63,12 +76,14 @@ public class UserInterface extends Application {
         Rectangle deadzone = new Rectangle(width*0.1, 20, Color.rgb(255, 80, 80, 0.85));
         Rectangle normalzone = new Rectangle(width*0.55, 20, Color.rgb(204, 255, 51));
         Rectangle perfzone = new Rectangle(width*0.35, 20, Color.rgb(102, 255, 102));
+        Rectangle runner = new Rectangle(2, 20, Color.rgb(51, 26, 0, 0.75) );
 
         hp.add(deadzone,0,0);
         hp.add(normalzone,1,0);
         hp.add(perfzone,2,0);
 
         root.getChildren().add(hp);
+        root.getChildren().add(runner);
 
 
 
@@ -95,8 +110,9 @@ public class UserInterface extends Application {
                     }
                     else {
                         if (FileConnection.fileCheck(fileName)==0) {
-                            PlayTamagotchi.createflower(FileConnection.getFlowerName(fileName));
-                            //obnovit koordinatu
+                            flower = PlayTamagotchi.createflower(FileConnection.getFlowerName(fileName));
+                            //current hp from flower
+                            runner.setX(flower.getCurrenthp());
                             primaryStage.setScene(mainScene);
                             // Screen with other buttons
                         }
@@ -116,6 +132,9 @@ public class UserInterface extends Application {
 
         startGame.getChildren().add(stratButton);
 
+
+
+
         // newgame scene
         TextField setflowerName = new TextField();
         setflowerName.setPromptText("Flower name");
@@ -128,7 +147,6 @@ public class UserInterface extends Application {
                         FileConnection.fileCreate(fileName, flowerName);
                         primaryStage.setScene(mainScene);
                     } catch (IOException e) {
-                        e.printStackTrace();
                         primaryStage.close();
                     }
                 }
@@ -147,38 +165,95 @@ public class UserInterface extends Application {
 
 
         // mainScene
-        Text text = new Text();
-        Button addButton = new Button("Add resources");
-
-
-
-        // mainScene
-        Button checkButton = new Button("Check stata");
-        checkButton.setOnMouseClicked(mouseEvent -> {
-            try {
-                Flower flower = PlayTamagotchi.createflower(FileConnection.getFlowerName(fileName));
-                if (flower.getCurrenthp() <= 0)
-                    text.setText(PlayTamagotchi.endGame(flower));
-                else
-                    text.setText(HumanBeing.checkstats(flower));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        });
-        checkButton.setLayoutY(300);
-        text.setY(50);
-        root.getChildren().add(text);
-        root.getChildren().add(checkButton);
-
-
 
 
 
         // new Scene...TODO new scene
         Button addWater = new Button("Wather");
+        addWater.setOnMouseClicked(mouseEvent -> {
+            HumanBeing.addWater(flower);
+        });
         Button addFood = new Button("Food");
+        addFood.setOnMouseClicked(mouseEvent -> {
+            HumanBeing.addFood(flower);
+        });
         Button addLove = new Button("Love");
+        addLove.setOnMouseClicked(mouseEvent -> {
+            HumanBeing.addLove(flower);
+        });
+
+
+        HBox addResources = new HBox();
+        addResources.setLayoutY(220);
+        addResources.setMinSize(50, 50);
+        addResources.setAlignment(Pos.BOTTOM_LEFT);
+
+        HBox addBox = new HBox();
+        addBox.setAlignment(Pos.BOTTOM_LEFT);
+
+        addBox.setVisible(false);
+        Button addButton = new Button("Add resources");
+        addButton.setAlignment(Pos.TOP_LEFT);
+        addButton.setOnMouseClicked(mouseEvent -> {
+            addBox.setVisible(true);
+            try {
+                PlayTamagotchi.updateFile(fileName,flower);
+            } catch (IOException e) {
+                primaryStage.close();
+            }
+        });
+        addBox.setOnMouseExited(mouseEvent -> {addBox.setVisible(false);
+            try {
+                PlayTamagotchi.updateFile(fileName,flower);
+            } catch (IOException e) {
+                primaryStage.close();
+            }
+        });
+        addBox.getChildren().addAll(addFood,addWater,addLove);
+        addResources.getChildren().addAll(addButton, addBox);
+        root.getChildren().add(addResources);
+
+
+
+        // mainScene
+        Text text = new Text();
+        text.setY(100);
+        text.setX(60);
+        FlowPane fp = new FlowPane();
+        fp.setVisible(false);
+        fp.setAlignment(Pos.CENTER);
+        fp.setLayoutY(30);
+
+        fp.setPrefSize(300,200);
+        BackgroundImage bgi = new BackgroundImage(new Image("background.jpg",300,300,false,true),
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        fp.setBackground(new Background(bgi));
+
+        Button checkButton = new Button("Check stata");
+        checkButton.setOnMouseClicked(mouseEvent -> {
+            try {
+                if (flower.getCurrenthp() <= 0)
+                    text.setText(PlayTamagotchi.endGame(flower));
+                else{
+                    PlayTamagotchi.updateFile(fileName,flower);
+                    text.setText(HumanBeing.checkstats(flower));
+
+                    fp.setVisible(true);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        });
+        fp.setOnMouseClicked(mouseEvent -> fp.setVisible(false));
+        fp.getChildren().add(text);
+        checkButton.setLayoutY(280);
+        root.getChildren().addAll(checkButton, fp);
+
+
+
+
 
 
 
@@ -201,7 +276,7 @@ public class UserInterface extends Application {
                         dialog.close();
                         try {
                             if (FileConnection.fileCheck(fileName)==0) {
-                                PlayTamagotchi.createflower(FileConnection.getFlowerName(fileName));
+                                FileConnection.fileWrite(fileName, flower);
                             }
                             primaryStage.close();
                         } catch (IOException e) {

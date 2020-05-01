@@ -1,3 +1,4 @@
+package main.java;
 public class Container {
     // counters for flower resources
     protected double water; // h2o

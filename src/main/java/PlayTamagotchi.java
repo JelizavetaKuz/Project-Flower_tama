@@ -1,4 +1,6 @@
+package main.java;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -23,6 +25,21 @@ public class PlayTamagotchi {
         FileConnection.fileWrite(fileName, flower);
         return flower;
 
+    }
+
+    public static void updateFile(String fileName, Flower flower) throws IOException {
+        double hours = FileConnection.readTimePassed(fileName);
+        int daytime = FileConnection.readHours(fileName);
+        for (int i = 0; i < hours; i++) {
+            if(flower.getCurrenthp()<=0)
+                break;
+            flower.setTime(flower.getTime()+1);
+            flower.grow(daytime);
+            if (daytime > 23)
+                daytime = 1;
+            else daytime++;
+        }
+        FileConnection.fileWrite(fileName, flower);
     }
 /*
     public static void startGame() throws IOException {
