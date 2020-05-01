@@ -1,4 +1,4 @@
-import java.io.IOException;
+package main.java;
 
 
 public class HumanBeing {
@@ -10,7 +10,7 @@ public class HumanBeing {
     }
 
     public static void setRun(boolean run) {
-        HumanBeing.run = run;
+        main.java.HumanBeing.run = run;
     }
 
     /**
@@ -37,7 +37,7 @@ public class HumanBeing {
      * Shows info about flower and container
      * @param
      */
-    public static String checkstats( Flower flower) throws IOException {
+    public static String checkstats( Flower flower) {
         return
         flower.getName() + "'s stats:\n"+
         "Health: " + flower.getCurrenthp()+"\n"+

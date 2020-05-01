@@ -1,16 +1,22 @@
+package main.java;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
@@ -28,8 +34,18 @@ public class UserInterface extends Application {
         primaryStage.setResizable(false);
         Group root = new Group();
 
-        Scene startScene = new Scene(root, 600, 400);
-        //Scene mainScene = new Scene(root,600, 400);
+
+        VBox startGame = new VBox();
+        Scene startScene = new Scene(startGame, 600, 400);
+        primaryStage.setScene(startScene);
+        startScene.setFill(Color.rgb(0, 102, 102));
+
+
+        Scene mainScene = new Scene(root,600, 400);
+
+        VBox newgameBox = new VBox();
+        Scene newgameScene = new Scene(newgameBox,600, 400);
+
         HBox addResources = new HBox();
 
 
@@ -61,7 +77,7 @@ public class UserInterface extends Application {
 
 
 
-        //PlayTamagotchi.startGame();
+        //PlayTamagotchi.startGame(); start scene
         Text textStart = new Text();
         textStart.setY(100);
         Button stratButton = new Button("Start");
@@ -70,48 +86,72 @@ public class UserInterface extends Application {
             @Override
             public void handle(MouseEvent mouseEvent){
 
-
                 try {
                     if(FileConnection.fileCheck(fileName)==2) {
-                        textStart.setText(HumanBeing.satrtinfo());
+                        textStart.setText(main.java.HumanBeing.satrtinfo());
                         //Scan for name
                         //FileConnection.fileCreate(fileName,);
+                        primaryStage.setScene(newgameScene);
                     }
                     else {
                         if (FileConnection.fileCheck(fileName)==0) {
                             PlayTamagotchi.createflower(FileConnection.getFlowerName(fileName));
+                            primaryStage.setScene(mainScene);
                             // Screen with other buttons
                         }
                         else {
                             textStart.setText("You can try once again!");
                             // Scan for name
                             //FileConnection.fileCreate(fileName, scanned");
+                            primaryStage.setScene(newgameScene);
                         }
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    primaryStage.close();
                 }
             }
         });
-        root.getChildren().add(textStart);
-        root.getChildren().add(stratButton);
+        newgameBox.getChildren().add(textStart);
 
+        startGame.getChildren().add(stratButton);
+
+        // newgame scene
         TextField setflowerName = new TextField();
-        String flowerName;
+        setflowerName.setPromptText("Flower name");
+        setflowerName.setOnKeyPressed(new EventHandler<KeyEvent>(){
+
+            public void handle(KeyEvent key){
+                if(key.getCode().equals(KeyCode.ENTER)){
+                    String flowerName = setflowerName.getText();
+                    try {
+                        FileConnection.fileCreate(fileName, flowerName);
+                        primaryStage.setScene(mainScene);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        primaryStage.close();
+                    }
+                }
+            }
+        });
+
+        newgameBox.getChildren().add(setflowerName);
+
 
 
         //not needed right now
-        Button newgameButton = new Button("New game");
-        newgameButton.setOnMouseClicked(mouseEvent -> {setflowerName.setPromptText("Flower name"); setflowerName.getText();});
+        //Button newgameButton = new Button("New game");
+        //newgameButton.setOnMouseClicked(mouseEvent -> {});
 
 
 
 
+        // mainScene
         Text text = new Text();
         Button addButton = new Button("Add resources");
 
 
 
+        // mainScene
         Button checkButton = new Button("Check stata");
         checkButton.setOnMouseClicked(mouseEvent -> {
             try {
@@ -119,7 +159,7 @@ public class UserInterface extends Application {
                 if (flower.getCurrenthp() <= 0)
                     text.setText(PlayTamagotchi.endGame(flower));
                 else
-                    text.setText(HumanBeing.checkstats(flower));
+                    text.setText(main.java.HumanBeing.checkstats(flower));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -134,6 +174,7 @@ public class UserInterface extends Application {
 
 
 
+        // new Scene...TODO new scene
         Button addWater = new Button("Wather");
         Button addFood = new Button("Food");
         Button addLove = new Button("Love");
@@ -142,14 +183,61 @@ public class UserInterface extends Application {
 
 
 
-        primaryStage.getOnHiding();
+        primaryStage.setOnHiding(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+
+                //Stage init
+                final Stage dialog = new Stage();
+
+                // Label
+                Label label = new Label("Do you really want to quit?");
+
+                Button okButton = new Button("Yes");
+                okButton.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        dialog.close();
+                        try {
+                            if (FileConnection.fileCheck(fileName)==0) {
+                                PlayTamagotchi.createflower(FileConnection.getFlowerName(fileName));
+                            }
+                            primaryStage.close();
+                        } catch (IOException e) {
+                            primaryStage.close();
+                        }
+                    }
+                });
+
+
+                Button cancelButton = new Button("No");
+                cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        primaryStage.show();
+                        dialog.close();
+                    }
+                });
+                FlowPane pane = new FlowPane(10, 10);
+                pane.setAlignment(Pos.CENTER);
+                pane.getChildren().addAll(okButton, cancelButton);
+
+                // küsimuse ja nuppude gruppi paigutamine
+                VBox vBox = new VBox(10);
+                vBox.setAlignment(Pos.CENTER);
+                vBox.getChildren().addAll(label, pane);
+
+                //stseeni loomine ja näitamine
+                Scene stseen2 = new Scene(vBox);
+                dialog.setScene(stseen2);
+                dialog.show();
+            }
+        });
 
 
 
 
-        primaryStage.setScene(startScene);
-        startScene.setFill(Color.rgb(0, 102, 102));
+
         primaryStage.show();
-
     }
 }

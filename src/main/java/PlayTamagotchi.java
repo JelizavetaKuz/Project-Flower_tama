@@ -1,3 +1,4 @@
+package main.java;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,12 +25,12 @@ public class PlayTamagotchi {
     }
 /*
     public static void startGame() throws IOException {
-        System.out.println(HumanBeing.satrtinfo());
+        System.out.println(HumanBeingCopy.satrtinfo());
         Flower flower = new Flower("Basic");
         String fileName = "flower.txt";
         FileConnection.create(fileName);
         FileConnection.fileRead(fileName,flower);
-        while (HumanBeing.isRun()) {
+        while (HumanBeingCopy.isRun()) {
             double hours = FileConnection.readTimePassed(fileName);
             int daytime = FileConnection.readHours(fileName);
             for (int i = 0; i < hours; i++) {
@@ -47,10 +48,10 @@ public class PlayTamagotchi {
                 endGame(fileName, flower);
                 break;
             }
-            if(!HumanBeing.isRun())
+            if(!HumanBeingCopy.isRun())
                 break;
             FileConnection.fileWrite(fileName, flower);
-            //HumanBeing.playerAction(flower);
+            //HumanBeingCopy.playerAction(flower);
 
         }
 
@@ -69,7 +70,7 @@ public class PlayTamagotchi {
         File save = new File(fileName);
         try (PrintWriter pw = new PrintWriter(save)) {
             pw.println("1");}
-        //HumanBeing.setRun(false);
+        //HumanBeingCopy.setRun(false);
 
         return ("I'm very sorry, but your flower has died in your absence.\n It was "
                 + flower.getTime() + " hours old and gain " + Utils.round(flower.getHigh())+ ". cm tall. \nIf you want to try again, rerun this game.");
