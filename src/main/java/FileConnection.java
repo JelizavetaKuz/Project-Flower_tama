@@ -67,11 +67,12 @@ public class FileConnection {
      * @throws IOException
      */
 
-    public static void fileCreate(String fileName, String flowerName) throws IOException {
+    public static Flower fileCreate(String fileName, String flowerName) throws IOException {
         File file = new File(fileName);
         file.createNewFile();
         Flower flower = new Flower(flowerName);
         fileWrite(fileName, flower);
+        return flower;
     }
 
     /**

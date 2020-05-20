@@ -101,13 +101,14 @@ public class PlayTamagotchi {
         //System.out.println("It was " + flower.getTime() + " hours old and gain " + Utils.round(flower.getHigh()) + ". cm tall.");
         //System.out.println("If you want to try again, rerun this game.");
         File save = new File(fileName);
+        String text = "I'm very sorry, but your flower has died in your absence.\n It was "
+                + flower.getTime() + " hours old and gain " + Utils.round(flower.getHigh())+ ". cm tall. \nIf you want to try again, rerun this game.";
+
         try (PrintWriter pw = new PrintWriter(save)) {
             pw.println("1");}
         //HumanBeingCopy.setRun(false);
 
-        return ("I'm very sorry, but your flower has died in your absence.\n It was "
-                + flower.getTime() + " hours old and gain " + Utils.round(flower.getHigh())+ ". cm tall. \nIf you want to try again, rerun this game.");
-
+        return text;
     }
 
 

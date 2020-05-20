@@ -21,12 +21,11 @@ import javafx.stage.WindowEvent;
 
 
 import java.io.IOException;
-import java.util.Stack;
 
 
 public class UserInterface extends Application {
-    Flower flower;
-    int stage;
+    private Flower flower;
+    private int stage;
 
     public static void main(String[] args) {
         launch(args);
@@ -37,7 +36,7 @@ public class UserInterface extends Application {
         String fileName ="flower.txt";
 
         primaryStage.setTitle("Flower tamagotchi");
-        //primaryStage.setResizable(false);
+        primaryStage.setResizable(false);
 
 
 
@@ -55,11 +54,12 @@ public class UserInterface extends Application {
 
         Group root = new Group();
         Scene mainScene = new Scene(root,600, 400);
-        mainScene.setFill(Color.rgb(0, 102, 102));
+        mainScene.setFill(Color.rgb(29, 74, 74));
 
-        HBox newgameBox = new HBox();
+        Group newgameBox = new Group();
         Scene newgameScene = new Scene(newgameBox,600, 400);
-        newgameScene.setFill(Color.rgb(0, 102, 102));
+        newgameScene.setFill(Color.rgb(29, 74, 74));
+
 
 
 
@@ -96,7 +96,8 @@ public class UserInterface extends Application {
 
         //PlayTamagotchi.startGame(); start scene
         Text textStart = new Text();
-        textStart.setY(100);
+        textStart.setY(10);
+        textStart.setFill(Color.SNOW);
         Button stratButton = new Button("Start");
         stratButton.setAlignment(Pos.CENTER_LEFT);
         stratButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -133,7 +134,9 @@ public class UserInterface extends Application {
                 }
             }
         });
-        mainScene.setOnMouseEntered(new EventHandler<MouseEvent>() {
+        newgameBox.getChildren().add(textStart);
+
+        mainScene.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 FlowPane paneContain = new FlowPane();
@@ -149,7 +152,7 @@ public class UserInterface extends Application {
 
                 StackPane flowerPane = new StackPane();
                 flowerPane.setPrefSize(300,300);
-
+                stage = flower.getStage();
                 if(stage == 1) {flowerPane.setBackground(new Background(new BackgroundImage(new Image("flower1.png",300,300,false,true),
                         BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                         BackgroundSize.DEFAULT)));flowerPane.setLayoutX(300) ; flowerPane.setLayoutY(140);}
@@ -167,7 +170,6 @@ public class UserInterface extends Application {
 
             }
         });
-        newgameBox.getChildren().add(textStart);
 
         startGame.getChildren().add(stratButton);
 
@@ -176,6 +178,9 @@ public class UserInterface extends Application {
 
         // newgame scene
         TextField setflowerName = new TextField();
+        setflowerName.setLayoutY(100);
+        setflowerName.setLayoutX(225);
+        setflowerName.setMaxWidth(200);
         setflowerName.setPromptText("Flower name");
         setflowerName.setOnKeyPressed(new EventHandler<KeyEvent>(){
 
@@ -183,7 +188,8 @@ public class UserInterface extends Application {
                 if(key.getCode().equals(KeyCode.ENTER)){
                     String flowerName = setflowerName.getText();
                     try {
-                        FileConnection.fileCreate(fileName, flowerName);
+                        flower  = FileConnection.fileCreate(fileName, flowerName);
+                        stage = flower.getStage();
                         primaryStage.setScene(mainScene);
                     } catch (IOException e) {
                         primaryStage.close();
@@ -196,19 +202,12 @@ public class UserInterface extends Application {
 
 
 
-        //not needed right now
-        //Button newgameButton = new Button("New game");
-        //newgameButton.setOnMouseClicked(mouseEvent -> {});
-
 
 
 
 
         // mainScene
 
-
-
-        // new Scene...TODO new scene
         Button addWater = new Button("Wather");
         addWater.setOnMouseClicked(mouseEvent -> {
             HumanBeing.addWater(flower);
@@ -273,8 +272,11 @@ public class UserInterface extends Application {
         Button checkButton = new Button("Check stata");
         checkButton.setOnMouseClicked(mouseEvent -> {
             try {
-                if (flower.getCurrenthp() <= 0)
+                if (flower.getCurrenthp() <= 0){
                     text.setText(PlayTamagotchi.endGame(flower));
+                    fp.setVisible(true);
+                    addButton.setVisible(false);
+                }
                 else{
                     PlayTamagotchi.updateFile(fileName,flower);
                     text.setText(HumanBeing.checkstats(flower));
@@ -306,6 +308,7 @@ public class UserInterface extends Application {
 
                 //Stage init
                 final Stage dialog = new Stage();
+
 
                 // Label
                 Label label = new Label("Do you really want to quit?");
@@ -346,6 +349,7 @@ public class UserInterface extends Application {
 
                 //stseeni loomine ja näitamine
                 Scene stseen2 = new Scene(vBox);
+                stseen2.setFill(Color.rgb(29, 74, 74));
                 dialog.setScene(stseen2);
                 dialog.show();
             }
